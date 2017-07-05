@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+  	"type": "git",
+  	"url": "https://github.com/eazyjobb/ng-light-blog.git"
+  },
   "author": "Ng",
   "license": "ISC",
   "dependencies": {
