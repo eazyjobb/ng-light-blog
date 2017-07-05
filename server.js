@@ -9,6 +9,7 @@ var http = require('http'),
 	render = require('./render');
 
 var app = express();
+app.use('/static', express.static('static'));
 
 // in production
 // app.set('view cache', true);
