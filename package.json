@@ -1,0 +1,15 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "light blog for sis and me",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ng",
+  "license": "ISC",
+  "dependencies": {
+    "dot": "^1.1.2",
+    "express": "^4.15.3"
+  }
+}
