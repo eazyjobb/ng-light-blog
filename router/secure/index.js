@@ -3,10 +3,10 @@ var express = require('express'),
 	render = require('../../render'), 
 	authorized = require('../authorized');
 
-router.get('/', authorized, 
-	function(req, res) {
-		res.send(render.test({text:"secure"}));
-	}
-);
+router.use(authorized({isAdmin: true}));
+
+router.get('/', function(req, res) {
+	res.send(render.test({text:"secure"}));
+});
 
 module.exports = router;

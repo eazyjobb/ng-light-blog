@@ -3,38 +3,50 @@ var express = require('express'),
 	render = require('../../render'),
 	passport = require('passport'), 
 	local_strategy = require('passport-local').Strategy,
-	authorized = require('../authorized');
+	authorized = require('../authorized'),
+	user_table = require('../../model/user');
 
 ////////////////////////////////////////////////////////////////////////////////
 // wait for database model
 ////////////////////////////////////////////////////////////////////////////////
 
 passport.use(new local_strategy(
-	function(username, password, done) {
-		if (username == '123' && password == '456')
-			return done(null, 123);
-		return done(null, false, {message: 'Invaild'});
+	function(user_name, password, done) {
+		user_table.get_user_by_user_name(user_name, function (err, user) {
+			if (err) throw err;
+			if (!user)
+				return done(null, false, {message: 'no such person'});
+
+			user_table.compare_password(password, user.password, function (err, Match) {
+				if (err) throw err;
+				if (Match)
+					return done(null, user);
+				return done(null, false, {message: 'wrong password'});
+			});
+		});
 	}
 ));
 
 passport.serializeUser(function(user, done) {
-	done(null, user);
+	done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-	done(null, id);
+	user_table.get_user_by_id(id, function (err, user) {
+		done(err, user);
+	});
 });
 
 ////////////////////////////////////////////////////////////////////////////////
 
-router.get('/', authorized, 
-	function(req, res) {
-		res.redirect('/secure');
-	}
-);
+router.get('/', authorized({isAdmin: false}), function (req, res) {
+	res.send(render.test({text: 'user page'}));
+});
 
 router.get('/login', function(req, res) {
-	res.send(render.login());
+	if (req.isAuthenticated())
+		res.redirect('/user');
+	else res.send(render.login());
 });
 
 router.post('/login', 

@@ -9,7 +9,14 @@ var http = require('http'),
 	passport = require('passport'), 
 	body_parser = require('body-parser'), 
 	cookie_parser = require('cookie-parser'),
-	express_validator = require('express-validator');
+	express_validator = require('express-validator'), 
+	mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/loginapp', {
+	useMongoClient: true
+});
+
+var db = mongoose.connection;
 
 // in production
 // app.set('view cache', true);
