@@ -7,6 +7,14 @@ function req(name) {
 	return exports[name] = module;
 }
 
+// compiling render
+require("dot").process({
+	global: "_page.render",
+	destination: __dirname + "/../render/",
+	path: (__dirname + "/../templates")
+});
+
+//exports render
 fs.readdirSync(__dirname).forEach(function(file) {
 	if ((file === 'index.js') || (file[0] === '_')) { return; }
 	var ext = path.extname(file);
