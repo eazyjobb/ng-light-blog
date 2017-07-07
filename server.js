@@ -12,11 +12,10 @@ var http = require('http'),
 	express_validator = require('express-validator'), 
 	mongoose = require('mongoose');
 
+mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost/loginapp', {
 	useMongoClient: true
 });
-
-var db = mongoose.connection;
 
 // in production
 // app.set('view cache', true);
