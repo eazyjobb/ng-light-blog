@@ -9,7 +9,8 @@ var http = require('http'),
 	passport = require('passport'), 
 	body_parser = require('body-parser'), 
 	express_validator = require('express-validator'), 
-	mongoose = require('mongoose');
+	mongoose = require('mongoose'),
+	flash = require('connect-flash');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost/loginapp', {
@@ -31,6 +32,8 @@ app.use(session({
 	store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
+app.use(flash());
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -44,11 +47,7 @@ app.use(express_validator({
 			formParam += '[' + namespace.shift() + ']';
 		}
 
-		return {
-			param : formParam,
-			msg   : msg,
-			value : value
-		};
+		return formParam + ' ' + msg + ' ' + value;
 	}
 }));
 

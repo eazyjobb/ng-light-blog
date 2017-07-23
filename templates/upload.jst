@@ -5,9 +5,10 @@
 		<title>{{=it.text}}</title>
 	</head>
 	<body>
-		{{	for (var x in it.error) { }}
-				<div> {{=it.error[x].param+':'+it.error[x].msg}} </div>
-		{{	}                       }}
+		{{	for (var x in it.error) {	}}
+			<div> {{=it.error[x]}} </div>
+		{{	}							}}
+		<!--div> {{=it.error.length}} </div-->
 		<div>{{=it.text}}</div>
 		<form method="post" enctype="multipart/form-data" action="/upload">
 			<div><input type="text" name="username" /></div>

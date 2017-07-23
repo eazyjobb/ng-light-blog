@@ -11,13 +11,13 @@ passport.use(new local_strategy(
 		user_table.get_user_by_user_name(user_name, function (err, user) {
 			if (err) throw err;
 			if (!user)
-				return done(null, false);
+				return done(null, false, {message: 'no such user'});
 
 			user_table.compare_password(password, user.password, function (err, Match) {
 				if (err) throw err;
 				if (Match)
 					return done(null, user);
-				return done(null, false);
+				return done(null, false, {message: 'incorrect password'});
 			});
 		});
 	}
@@ -35,19 +35,27 @@ passport.deserializeUser(function (id, done) {
 
 router.get('/', authorized(), function (req, res) {
 	res.send(render.test({text: 'user page'}));
+	//console.log(req.session);
 });
 
 router.get('/login',
 	authorized({notLogin: true}),
 	function (req, res) {
-		res.send(render.login());
+		//console.log(req.session);
+		res.send(render.login({
+			error: req.flash('error'),
+			info: req.flash('info')
+		}));
 	}
 );
 
 router.get('/register',
 	authorized({notLogin: true}),
 	function (req, res) {
-		res.send(render.register());
+		res.send(render.register({
+			error: req.flash('error'),
+			info: req.flash('info')
+		}));
 	}
 );
 
@@ -56,7 +64,7 @@ router.post('/login',
 	passport.authenticate('local', {
 		successRedirect:'/user', 
 		failureRedirect:'/user/login', 
-		failureFlash: false
+		failureFlash: true
 	}), 
 	function (req, res) {
 		res.redirect('/user');
@@ -77,14 +85,18 @@ router.post('/register',
 		var errors = req.validationErrors();
 
 		if (errors) {
-			res.send(render.register({error:errors}));
+			for (var x in errors)
+				req.flash('error', errors[x]);
+			//console.log(errors);
+			res.redirect('/user/register');
 			return;
 		}
 
 		user_table.get_user_by_user_name(req.body.user_name, function (err, user) {
 			if (err) throw err;
 			if (user) {
-				res.send(render.register({error:[{param:"user_name", msg:'user_name exist!'}]}));
+				req.flash('error', 'user_name exist');
+				res.redirect('/user/register');
 				return;
 			}
 			
@@ -98,11 +110,12 @@ router.post('/register',
 
 			user_table.create_user(new_user, function(err, user){
 				if(err) {
-					res.send(render.register({error:[{param:"server", msg:'server error'}]}));
+					req.flash('error', 'server error');
+					res.redirect('/user/register');
 					throw err;
 				}
 
-				console.log(user);
+				//console.log(user);
 				res.redirect('/user/login');
 			});
 		});

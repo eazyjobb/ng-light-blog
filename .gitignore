@@ -1,4 +1,6 @@
 render/
+!render/index.js
+tmp/
 
 # Created by https://www.gitignore.io/api/node,macos
 

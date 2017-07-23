@@ -5,6 +5,10 @@
 		<title>login</title>
 	</head>
 	<body>
+		{{	for (var x in it.error) {	}}
+			<div> {{=it.error[x]}} </div>
+		{{	}							}}
+		<!--div> {{=it.error.length}} </div-->
 		<h2 class="page-header">Account Login</h2>
 		<form method="post" action="/user/login">
 			<div class="form-group">
