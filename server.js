@@ -4,11 +4,10 @@ var http = require('http'),
 	router = require('./router'), 
 	port = undefined, 
 	session = require('express-session'), 
+	MongoStore = require('connect-mongo')(session), 
 	app = express(), 
-	flash = require('connect-flash'), 
 	passport = require('passport'), 
 	body_parser = require('body-parser'), 
-	cookie_parser = require('cookie-parser'),
 	express_validator = require('express-validator'), 
 	mongoose = require('mongoose');
 
@@ -24,12 +23,12 @@ app.use('/static', express.static('static'));
 
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
-app.use(cookie_parser());
 
 app.use(session({
-    secret: 'secret',
-    saveUninitialized: true,
-    resave: true
+	secret: 'yFJVVsX30jCREvIAeEj9O8zAx5HPMgO',
+	saveUninitialized: true,
+	resave: true,
+	store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
 app.use(passport.initialize());
@@ -52,8 +51,6 @@ app.use(express_validator({
 		};
 	}
 }));
-
-app.use(flash());
 
 app.use('/', router);
 

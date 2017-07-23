@@ -11,13 +11,13 @@ passport.use(new local_strategy(
 		user_table.get_user_by_user_name(user_name, function (err, user) {
 			if (err) throw err;
 			if (!user)
-				return done(null, false, {message: 'no such person'});
+				return done(null, false);
 
 			user_table.compare_password(password, user.password, function (err, Match) {
 				if (err) throw err;
 				if (Match)
 					return done(null, user);
-				return done(null, false, {message: 'wrong password'});
+				return done(null, false);
 			});
 		});
 	}
@@ -56,7 +56,7 @@ router.post('/login',
 	passport.authenticate('local', {
 		successRedirect:'/user', 
 		failureRedirect:'/user/login', 
-		failureFlash: true
+		failureFlash: false
 	}), 
 	function (req, res) {
 		res.redirect('/user');
@@ -77,14 +77,14 @@ router.post('/register',
 		var errors = req.validationErrors();
 
 		if (errors) {
-			res.send(render.register(errors));
+			res.send(render.register({error:errors}));
 			return;
 		}
 
 		user_table.get_user_by_user_name(req.body.user_name, function (err, user) {
 			if (err) throw err;
 			if (user) {
-				res.send(render.register([{param:"user_name", msg:'user_name exist!'}]));
+				res.send(render.register({error:[{param:"user_name", msg:'user_name exist!'}]}));
 				return;
 			}
 			
@@ -98,7 +98,7 @@ router.post('/register',
 
 			user_table.create_user(new_user, function(err, user){
 				if(err) {
-					res.send(render.register([{param:"server", msg:'server error'}]));
+					res.send(render.register({error:[{param:"server", msg:'server error'}]}));
 					throw err;
 				}
 
@@ -113,7 +113,6 @@ router.get('/logout',
 	authorized(),
 	function (req, res){
 		req.logout();
-		req.flash('success_msg', 'You are logged out');
 		res.redirect('/user/login');
 	}
 );
