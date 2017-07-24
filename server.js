@@ -47,7 +47,7 @@ app.use(express_validator({
 			formParam += '[' + namespace.shift() + ']';
 		}
 
-		return formParam + ' ' + msg + ' ' + value;
+		return msg;
 	}
 }));
 

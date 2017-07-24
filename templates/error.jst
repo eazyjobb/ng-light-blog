@@ -1,0 +1,15 @@
+{{	if (it && it.length > 0) {	}}
+
+	<div class="ui error floating message">
+		<i class="close icon"></i>
+		<div class="header">
+			{{=it.length}} Error(s) Occurred:
+		</div>
+		<ul class="list">
+			{{	for (var x in it) {	}}
+					<li> {{=it[x]}} </li>
+			{{	}							}}
+		</ul>
+	</div>
+
+{{										}	}}

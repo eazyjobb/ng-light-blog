@@ -1,18 +1,22 @@
 is_log_in = function(req, res, next) {
 	if(req.isAuthenticated())
 		return next(), null;
+	req.flash('info', 'Please log in.');
 	res.redirect('/user/login');
 };
 
 is_admin = function(req, res, next) {
 	if(req.isAuthenticated() && req.user.isAdmin)
 		return next(), null;
+	req.flash('error', "You're unauthorized.");
 	res.redirect('/user');
 };
 
 not_log_in = function (req, res, next) {
-	if(req.isAuthenticated())
+	if(req.isAuthenticated()) {
+		req.flash('error', "You'd already log in.");
 		return res.redirect('/user'), null;
+	}
 	next();
 }
 

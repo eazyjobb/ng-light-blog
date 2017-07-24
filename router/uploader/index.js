@@ -10,10 +10,11 @@ var express = require('express'),
 router.use(authorized());
 
 router.get('/', function(req, res) {
-	res.send(render.upload({
-		text:"uploader",
-		error: req.flash('error'),
-		info: req.flash('info')
+	res.send(render.base({
+		title: 'Upload',
+		content: render.upload(),
+		error: render.error(req.flash('error')),
+		info: render.info(req.flash('info'))
 	}));
 });
 
@@ -24,7 +25,9 @@ router.post('/', function(req, res) {
 			res.redirect('/upload');
 			return;
 		}
-		return res.send(render.test({text: 'upload succ'})), null;
+		req.flash('info', 'Upload successful');
+		res.redirect('/user');
+		return null;
 	})
 });
 

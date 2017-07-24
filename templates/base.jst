@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title> {{=it.title}} </title>
+		<!-- css -->
+			<link href="/static/semantic/semantic.min.css" rel="stylesheet" type="text/css" />
+			{{	if (it.css){	}}
+			{{		=it.css		}}
+			{{	}				}}
+		<!-- css -->
+	</head>
+	<body> <div class="ui grid container">
+		{{	if (it.header){	}}
+		{{		=it.header	}}
+		{{	}				}}
+		<div class="ui row">
+			{{	if (it.content){}}
+			{{		=it.content	}}
+			{{	}				}}
+			<div class="ui sixteen wide column">
+				{{	if (it.error){	}}
+				{{		=it.error	}}
+				{{	}				}}
+				{{	if (it.info){	}}
+				{{		=it.info	}}
+				{{	}				}}
+			</div>
+		</div>
+		{{	if (it.bottom){	}}
+		{{		=it.bottom	}}
+		{{	}				}}
+		<!-- js -->
+			<script language="javascript" type="text/javascript" src="/static/js/jquery-3.2.1.min.js"></script>
+			<script language="javascript" type="text/javascript" src="/static/semantic/semantic.min.js"></script>
+			<script language="javascript" type="text/javascript" src="/static/js/message-handle.js"></script>
+			{{	if (it.js){		}}
+			{{		=it.js		}}
+			{{	}				}}
+		<!-- js -->
+	</div></body>
+</html>

@@ -34,17 +34,21 @@ passport.deserializeUser(function (id, done) {
 });
 
 router.get('/', authorized(), function (req, res) {
-	res.send(render.test({text: 'user page'}));
-	//console.log(req.session);
+	res.send(render.base({
+		title: 'User Page',
+		error: render.error(req.flash('error')),
+		info: render.info(req.flash('info'))
+	}));
 });
 
 router.get('/login',
 	authorized({notLogin: true}),
 	function (req, res) {
-		//console.log(req.session);
-		res.send(render.login({
-			error: req.flash('error'),
-			info: req.flash('info')
+		res.send(render.base({
+			title: 'Log In',
+			content: render.login(),
+			error: render.error(req.flash('error')),
+			info: render.info(req.flash('info'))
 		}));
 	}
 );
@@ -52,9 +56,11 @@ router.get('/login',
 router.get('/register',
 	authorized({notLogin: true}),
 	function (req, res) {
-		res.send(render.register({
-			error: req.flash('error'),
-			info: req.flash('info')
+		res.send(render.base({
+			title: 'Register',
+			content: render.register(),
+			error: render.error(req.flash('error')),
+			info: render.info(req.flash('info'))
 		}));
 	}
 );
@@ -75,11 +81,13 @@ router.post('/register',
 	authorized({notLogin: true}),
 	function (req, res) {
 		
+		req.checkBody('user_name', 'UserID is required').notEmpty();
+		req.checkBody('user_name', 'UserID should be alphanumeric').isAlphanumeric();
 		req.checkBody('name', 'Name is required').notEmpty();
 		req.checkBody('email', 'Email is required').notEmpty();
 		req.checkBody('email', 'Email is not valid').isEmail();
-		req.checkBody('user_name', 'Username is required').notEmpty();
 		req.checkBody('password', 'Password is required').notEmpty();
+		req.checkBody('password', 'Password is too short').len(6, 100);
 		req.checkBody('password-rep', 'Passwords do not match').equals(req.body.password);
 
 		var errors = req.validationErrors();
@@ -116,6 +124,7 @@ router.post('/register',
 				}
 
 				//console.log(user);
+				req.flash('info', "Registration Completed");
 				res.redirect('/user/login');
 			});
 		});
@@ -126,6 +135,7 @@ router.get('/logout',
 	authorized(),
 	function (req, res){
 		req.logout();
+		req.flash('info', 'Logout Successful');
 		res.redirect('/user/login');
 	}
 );
