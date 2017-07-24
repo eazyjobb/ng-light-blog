@@ -11,13 +11,13 @@ passport.use(new local_strategy(
 		user_table.get_user_by_user_name(user_name, function (err, user) {
 			if (err) throw err;
 			if (!user)
-				return done(null, false, {message: 'no such user'});
+				return done(null, false, {message: 'No such user'});
 
 			user_table.compare_password(password, user.password, function (err, Match) {
 				if (err) throw err;
 				if (Match)
 					return done(null, user);
-				return done(null, false, {message: 'incorrect password'});
+				return done(null, false, {message: 'Incorrect password'});
 			});
 		});
 	}

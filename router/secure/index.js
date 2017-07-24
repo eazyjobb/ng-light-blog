@@ -16,6 +16,8 @@ router.get('/', function (req, res) {
 router.get('/debug/error_and_info', function (req, res) {
 	res.send(render.base({
 		title: 'debug error test',
+		header: render.header(),
+		content: render.debug(),
 		error: render.error([
 			'incorrect password', 
 			'user does not exist', 

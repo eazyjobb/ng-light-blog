@@ -2,41 +2,71 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 		<title> {{=it.title}} </title>
 		<!-- css -->
 			<link href="/static/semantic/semantic.min.css" rel="stylesheet" type="text/css" />
+			{{	if (it.header){		}}
+			<link href="/static/css/header.css" rel="stylesheet" type="text/css" />
+			{{	}					}}
 			{{	if (it.css){	}}
 			{{		=it.css		}}
 			{{	}				}}
 		<!-- css -->
 	</head>
-	<body> <div class="ui grid container">
+	<body>
 		{{	if (it.header){	}}
 		{{		=it.header	}}
 		{{	}				}}
+
+	<div class="ui grid container">
+
 		<div class="ui row">
-			{{	if (it.content){}}
-			{{		=it.content	}}
-			{{	}				}}
-			<div class="ui sixteen wide column">
-				{{	if (it.error){	}}
-				{{		=it.error	}}
-				{{	}				}}
-				{{	if (it.info){	}}
-				{{		=it.info	}}
-				{{	}				}}
+			<div class="ui text container segment" style="border: none; box-shadow: none;">
+				{{	if (it.error || it.info){	}}
+				<div> <div class="ui right dividing rail">
+					<div>
+						{{	if (it.error){	}}
+						{{		=it.error	}}
+						{{	}				}}
+						{{	if (it.info){	}}
+						{{		=it.info	}}
+						{{	}				}}
+					</div>
+				</div> </div>
+				{{							}	}}
+				{{	if (it.content){	}}
+				{{		=it.content		}}
+				{{	}					}}
 			</div>
 		</div>
+
 		{{	if (it.bottom){	}}
 		{{		=it.bottom	}}
 		{{	}				}}
+
 		<!-- js -->
 			<script language="javascript" type="text/javascript" src="/static/js/jquery-3.2.1.min.js"></script>
 			<script language="javascript" type="text/javascript" src="/static/semantic/semantic.min.js"></script>
+
+			{{	if (it.error || it.info){		}}
 			<script language="javascript" type="text/javascript" src="/static/js/message-handle.js"></script>
+			{{	}								}}
+
+			{{	if (it.header){		}}
+			<script language="javascript" type="text/javascript" src="/static/js/header-handle.js"></script>
+			{{	}					}}
+			
+			<script language="javascript" type="text/javascript">
+				$(document).ready(function() {
+					$('.ui.dropdown').dropdown({on: 'hover'});
+				});
+			</script>
+
 			{{	if (it.js){		}}
 			{{		=it.js		}}
 			{{	}				}}
 		<!-- js -->
-	</div></body>
+	</div>
+	</body>
 </html>
