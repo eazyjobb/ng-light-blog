@@ -9,6 +9,12 @@
 			{{	if (it.header){		}}
 			<link href="/static/css/header.css" rel="stylesheet" type="text/css" />
 			{{	}					}}
+			{{	if (it.error || it.info){		}}
+			<link href="/static/css/message.css" rel="stylesheet" type="text/css" />
+			{{	}								}}
+			{{	if (it.author){		}}
+			<link href="/static/css/author.css" rel="stylesheet" type="text/css" />
+			{{	}					}}
 			{{	if (it.css){	}}
 			{{		=it.css		}}
 			{{	}				}}
@@ -19,12 +25,12 @@
 		{{		=it.header	}}
 		{{	}				}}
 
-	<div class="ui grid container">
+	<div class="ui grid">
 
 		<div class="ui row">
 			<div class="ui text container segment" style="border: none; box-shadow: none;">
 				{{	if (it.error || it.info){	}}
-				<div> <div class="ui right dividing rail">
+				<div> <div class="ui left rail" id="message">
 					<div>
 						{{	if (it.error){	}}
 						{{		=it.error	}}
@@ -35,15 +41,22 @@
 					</div>
 				</div> </div>
 				{{							}	}}
+				<div id="content">
 				{{	if (it.content){	}}
 				{{		=it.content		}}
 				{{	}					}}
+				</div>
+				{{	if (it.author){		}}
+				{{		=it.author		}}
+				{{	}					}}
+
 			</div>
 		</div>
+	</div>
 
-		{{	if (it.bottom){	}}
-		{{		=it.bottom	}}
-		{{	}				}}
+	{{	if (it.bottom){	}}
+	{{		=it.bottom	}}
+	{{	}				}}
 
 		<!-- js -->
 			<script language="javascript" type="text/javascript" src="/static/js/jquery-3.2.1.min.js"></script>
@@ -56,7 +69,11 @@
 			{{	if (it.header){		}}
 			<script language="javascript" type="text/javascript" src="/static/js/header-handle.js"></script>
 			{{	}					}}
-			
+
+			{{	if (it.author){		}}
+			<script language="javascript" type="text/javascript" src="/static/js/author-handle.js"></script>
+			{{	}					}}
+
 			<script language="javascript" type="text/javascript">
 				$(document).ready(function() {
 					$('.ui.dropdown').dropdown({on: 'hover'});
@@ -67,6 +84,5 @@
 			{{		=it.js		}}
 			{{	}				}}
 		<!-- js -->
-	</div>
 	</body>
 </html>

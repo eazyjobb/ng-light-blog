@@ -13,11 +13,12 @@ router.get('/', function (req, res) {
 	}));
 });
 
-router.get('/debug/error_and_info', function (req, res) {
+router.get('/debug/', function (req, res) {
 	res.send(render.base({
 		title: 'debug error test',
 		header: render.header(),
 		content: render.debug(),
+		author: render.author(),
 		error: render.error([
 			'incorrect password', 
 			'user does not exist', 
@@ -28,7 +29,8 @@ router.get('/debug/error_and_info', function (req, res) {
 			'login success', 
 			'upload success', 
 			'something good'
-		])
+		]),
+		bottom: render.bottom()
 	}));
 })
 

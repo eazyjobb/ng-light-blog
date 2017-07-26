@@ -1,0 +1,9 @@
+#author {
+	margin-top: 3em;
+}
+
+@media screen and (min-width: 1440px) {
+	#author {
+		max-width: 280px;
+	}
+}
