@@ -1,0 +1,29 @@
+{{	if (it.author){		}}
+<link href="/static/css/author.css" rel="stylesheet" type="text/css" />
+{{	}					}}
+{{	if (it.css){	}}
+{{		=it.css		}}
+{{	}				}}
+
+<div class="ui container">
+<div class="ui row">
+	<div class="ui text container segment" style="margin-bottom:2em; padding:2em;">
+		<div id="content">
+		{{	if (it.content){	}}
+		{{		=it.content		}}
+		{{	}					}}
+		</div>
+		{{	if (it.author){		}}
+		{{		=it.author		}}
+		{{	}					}}
+
+	</div>
+</div>
+</div>
+
+{{	if (it.author){		}}
+<script language="javascript" type="text/javascript" src="/static/js/author-handle.js"></script>
+{{	}					}}
+{{	if (it.js){	}}
+{{		=it.js	}}
+{{	}			}}

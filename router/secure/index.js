@@ -17,8 +17,10 @@ router.get('/debug/', function (req, res) {
 	res.send(render.base({
 		title: 'debug error test',
 		header: render.header(),
-		content: render.debug(),
-		author: render.author(),
+		content: render.blog_content({
+			author: render.author(),
+			content: render.debug()
+		}),
 		error: render.error([
 			'incorrect password', 
 			'user does not exist', 
