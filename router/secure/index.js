@@ -16,7 +16,10 @@ router.get('/', function (req, res) {
 router.get('/debug/', function (req, res) {
 	res.send(render.base({
 		title: 'debug error test',
-		header: render.header(),
+		header: render.header({
+			title:"Debug Page",
+			description: "<p>Under Construction</p>"
+		}),
 		content: render.blog_content({
 			author: render.author(),
 			content: render.debug()
@@ -34,6 +37,6 @@ router.get('/debug/', function (req, res) {
 		]),
 		bottom: render.bottom()
 	}));
-})
+});
 
 module.exports = router;

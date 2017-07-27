@@ -45,17 +45,17 @@ var admin = new user_table({
 	isAdmin: true
 });
 
+user_table.create_user(admin, function (err, user) {
+	if (err) throw err;
+	console.log(user);
+});
+
 var normi = new user_table({
 	name: 'normi',
 	email:'',
 	user_name: 'normi',
 	password: '123',
 	isAdmin: false
-});
-
-user_table.create_user(admin, function (err, user) {
-	if (err) throw err;
-	console.log(user);
 });
 
 user_table.create_user(normi, function (err, user) {

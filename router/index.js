@@ -4,7 +4,8 @@ var express = require('express'),
 	user_router = require('./user'), 
 	secure = require('./secure'), 
 	blog_pages = require('./blog-pages'),
-	uploader = require('./uploader');
+	uploader = require('./uploader'),
+	today = require('./today');
 
 router.get('/', function(req, res) {
 	res.send(render.base({
@@ -18,6 +19,7 @@ router.use('/pages', blog_pages);
 router.use('/user', user_router);
 router.use('/secure', secure);
 router.use('/upload', uploader);
+router.use('/today', today);
 
 router.use('*', function (req, res) {
 	res.send(render.base({

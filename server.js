@@ -13,7 +13,7 @@ var http = require('http'),
 	flash = require('connect-flash');
 
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost/loginapp', {
+mongoose.connect('mongodb://localhost/blog', {
 	useMongoClient: true
 });
 
