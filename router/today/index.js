@@ -94,4 +94,22 @@ router.get('/', function (req, res) {
 	}));
 });
 
+router.get('/history/data', function (req, res) {
+	res.send(req.body);
+});
+
+router.get('/history', function (req, res) {
+	res.send(render.base({
+		title: '当年今日',
+		header: render.header({
+			title: '当年今日',
+			description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>'
+		}),
+		content: render.blog_content({
+			content: render.tweet_history()
+		}),
+		bottom: render.bottom()
+	}));
+});
+
 module.exports = router;
