@@ -1,23 +1,57 @@
 <link href="/static/css/today.css" rel="stylesheet" type="text/css" />
 
 <div class="ui fluid container" id="today">
-	<div class="ui two column stackable grid" style="margin-bottom:0em;">
+	<div class="ui two column stackable grid" style="margin-bottom:0em; position: relative;">
+		
+		<div class="ui active dimmer">
+			<div class="ui indeterminate text loader">Preparing Files</div>
+		</div>
 
-		<div class='ui column today-context fade reveal'>
+		<div class='ui column today-context move reveal'>
 			<div class="ui visible content">
 				<div class="today-type left">囍最日今</div>
 			</div>
-			<div class="ui hidden content">
-				<div class="today-type2">明天数据库</div>
+			<div class="ui hidden content" id="left-hidden">
+				<div class="today-type2 left">
+					<div class="ng-divider"> 今日最囍 </div>
+
+					{{ for(var x in it.happiness) { }}
+						<div class="ui segment compact words left">
+							<p>{{=it.happiness[x].description}}</p>
+							<p> --- {{=it.happiness[x].author}} @
+							{{=it.happiness[x].date.toDateString()}}</p>
+						</div>
+					{{ }							}}
+
+					<a class="history-button left" href="/today/history">
+						<button class="ui green button">历史最囍</button>
+					</a>
+
+				</div>
 			</div>
 		</div>
 
-		<div class='ui column today-context fade reveal'>
+		<div class='ui column today-context move right reveal'>
 			<div class="ui visible content">
 				<div class="today-type right">今日最气</div>
 			</div>
-			<div class="ui hidden content">
-				<div class="today-type2">今天干不完</div>
+			<div class="ui hidden content" id="right-hidden">
+				<div class="today-type2 right">
+					<div class="ng-divider"> 今日最气 </div>
+
+					{{ for(var x in it.sadness) { }}
+						<div class="ui segment compact words right">
+							<p>{{=it.sadness[x].description}}</p>
+							<p> --- {{=it.sadness[x].author}} @
+							{{=it.sadness[x].date.toDateString()}}</p>
+						</div>
+					{{ }							}}
+
+					<a class="history-button right" href="/today/history">
+						<button class="ui red button">历史最气</button>
+					</a>
+
+				</div>
 			</div>
 		</div>
 
