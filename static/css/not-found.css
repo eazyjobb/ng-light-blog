@@ -15,16 +15,6 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	overflow: hidden;
-}
-
-#img-container {
-	width: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	overflow: hidden;
-	text-align: center;
 	background-color: rgb(41, 131, 151);
 }
 

@@ -11,6 +11,7 @@ $(document).ready(function () {
 		var codeHiehgt = $('#error-code').height();
 
 		//console.log(upperWidth, upperHeight, codeWidth, codeHiehgt);
+		$('#not-found').css({'height': upperHeight + 'px'});
 
 		$('#img-container').css({'height': upperHeight + 'px'});
 		$('#error-code').css({
@@ -22,29 +23,18 @@ $(document).ready(function () {
 			- $('#img-container').width()) / 2;
 		img_ori_x_margin = -imgMargin;
 
-		//console.log(img_ori_x_margin);
-
-		if (imgMargin > 0) {
-			$('#img-container > img').css({
-				'margin-left' : -imgMargin + 'px',
-				'margin-right' : -imgMargin + 'px'
-			});
-		} else {
-			$('#img-container > img').css({
-				'margin-left' : 'auto',
-				'margin-right' : 'auto'
-			});
-		}
+		$('#img-container > img').css({
+			'margin-left' : -imgMargin + 'px',
+			'margin-right' : -imgMargin + 'px'
+		});
 	}
 
 	$('#img-container').mousemove(function (event) {
-		var middleheight = $('#img-container').height()/2;
-		var middlewidth = $('#img-container').width()/2;
+		var middleheight = $('body').height()/2;
+		var middlewidth = $('body').width()/2;
 
-		var x = (event.offsetX - middlewidth) / 35;
-		var y = (event.offsetY - middleheight) / 35;
-
-		//console.log(event);
+		var x = (event.pageX - middlewidth) / 35;
+		var y = (event.pageY - middleheight) / 35;
 
 		$('#img-container > img').css({
 			'margin-left' : img_ori_x_margin - x,
@@ -55,5 +45,9 @@ $(document).ready(function () {
 	});
 
 	notFoundPlace();
+
+	if (navigator.userAgent.indexOf('iPhone') != -1)
+		setTimeout('$(window).resize()', 500);
+
 	$(window).resize(notFoundPlace);
 });

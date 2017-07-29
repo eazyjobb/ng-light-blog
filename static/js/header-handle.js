@@ -4,6 +4,9 @@ $(document).ready(function() {
 	$('.main.menu').visibility({
 		type: 'fixed'
 	});
+	$('.manu-jump').click(function() {
+		$(location).attr('href', $(this).attr("href"));
+	});
 });
 
 function header_select() {
