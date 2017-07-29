@@ -10,7 +10,7 @@ $(document).ready(function () {
 				return;
 			$.ajax({
 				url: "/today/history/data/",
-				data: JSON.stringify({date: hv_date}),
+				data: {date: hv_date},
 				contentType: 'application/json',
 				dataType: 'json',
 				type: "GET",
@@ -18,7 +18,7 @@ $(document).ready(function () {
 					if (hv_counter)
 						return;
 					//yesterday
-					hv_date.setTime(hv_date.getTime() - 1000 * 60 * 60 * 24);
+					
 					if (result["empty"])
 						return;
 					if (result["end"]) {
@@ -32,7 +32,8 @@ $(document).ready(function () {
 					$('#history').append('<div class="a-day">');
 					var last_day = $(".a-day:last");
 					last_day.append($('<div class="ui horizontal divider">').html(hv_date.toDateString()));
-
+					
+					hv_date.setTime(hv_date.getTime() - 1000 * 60 * 60 * 24);
 					//console.log(result, result.happiness, result.sadness);
 
 					for (var x in result.happiness) {
