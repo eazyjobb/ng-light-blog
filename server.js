@@ -23,7 +23,7 @@ mongoose.connect('mongodb://localhost/blog', {
 app.use('/static', express.static('static'));
 
 app.use(body_parser.json());
-app.use(body_parser.urlencoded({ extended: false }));
+app.use(body_parser.urlencoded({ extended: true }));
 
 app.use(session({
 	secret: 'yFJVVsX30jCREvIAeEj9O8zAx5HPMgO',

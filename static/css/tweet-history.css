@@ -2,3 +2,16 @@ body {
 	background-image: url(/static/img/tbwa.gif);
 	background-repeat: repeat;
 }
+
+#history-header {
+	font-size: 5em;
+	text-shadow: 0px 0px 15px #000;
+}
+
+@media only screen and (max-width: 767px) {
+	#history-header {
+		width: 3em;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
