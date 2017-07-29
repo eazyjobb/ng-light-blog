@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	footer_place = function () {
+	var footer_place = function () {
 		var pheight = $('body').height()
 					- $('#footer').height()
 					- $('#footer')[0].offsetTop

@@ -1,0 +1,50 @@
+#error-code {
+	position: absolute;
+	font-size: 11em;
+	text-shadow: 0px 0px 30px #000;
+	z-index: 1;
+}
+
+#not-found {
+	position: relative;
+	margin-top: -1em;
+}
+
+#img-container {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+}
+
+#img-container {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	text-align: center;
+	background-color: rgb(41, 131, 151);
+}
+
+#img-container > img {
+	margin: -1em;
+	height: calc(100% + 2em);
+	width: auto;
+}
+
+.blur {
+	background-color: rgba(0,0,0,0.5);
+	-webkit-filter: blur(7px);
+	-moz-filter: blur(7px);
+	-ms-filter: blur(7px);
+	-o-filter: blur(7px);
+	filter: blur(7px);    
+}
+
+@media only screen and (min-width: 768px) {
+	#error-code {
+		font-size: 15em;
+	}
+}
