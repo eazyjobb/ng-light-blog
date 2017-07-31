@@ -64,7 +64,6 @@ router.get('/', function (req, res) {
 });
 
 router.get('/history/data/', function (req, res) {
-	console.log(req.url);
 	var date = new Date(parseInt(req.query.time));
 	var happiness = [];
 	promise.delay(0).then(function () {
@@ -108,6 +107,23 @@ router.get('/history', function (req, res) {
 		content: render.tweet_history(),
 		bottom: render.bottom()
 	}));
+});
+
+router.post('/update', authorized(), function (req, res) {
+	var id = req.user._id.toString();
+	var new_tweet = new tweet({
+		user_id: id,
+		date: new Date(),
+		description: req.body.omsg,
+		type: req.body.type,
+		agree: 0
+	});
+	tweet.insert_tweet(new_tweet, function (err) {
+		if (err)
+			throw err;
+		req.flash('info', '更新成功');
+		res.end();
+	});
 });
 
 module.exports = router;

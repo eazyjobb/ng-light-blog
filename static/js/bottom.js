@@ -20,4 +20,6 @@ $(document).ready(function () {
 		subtree: true,
 		childList: true
 	});
+
+	setTimeout('$(window).resize()', 500);
 });

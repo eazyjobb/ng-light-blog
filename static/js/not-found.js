@@ -46,7 +46,5 @@ $(document).ready(function () {
 
 	notFoundPlace();
 
-	setTimeout('$(window).resize()', 500);
-
 	$(window).resize(notFoundPlace);
 });
