@@ -30,7 +30,11 @@ tweet_table.insert_tweet = function(new_tweet, callback) {
 	tweet_table.findOne(query, function (err, tweet) {
 		if (err) throw err;
 
-		new_tweet.save(callback);
+		if (tweet) {
+			tweet.msg = new_tweet.msg
+			tweet.save(callback);
+		}else
+			new_tweet.save(callback);
 	});
 }
 
