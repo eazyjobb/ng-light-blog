@@ -64,6 +64,7 @@ router.get('/', function (req, res) {
 });
 
 router.get('/history/data/', function (req, res) {
+	console.log(req.url);
 	var date = new Date(parseInt(req.query.time));
 	var happiness = [];
 	promise.delay(0).then(function () {
@@ -87,11 +88,13 @@ router.get('/history/data/', function (req, res) {
 			.catch(function (err) {console.log(err);});
 	}).then(function () {
 		if (happiness.length == 0) {
-			res.json({empty:1});
-			return;
-		}
-		//console.log(happiness);
-		res.json(happiness);
+			tweet.num_of_tweet_before_date(date).then(function (count) {
+				if (count == 0)
+					res.json({end:1});
+				else
+					res.json({empty:1});
+			});
+		} else res.json(happiness);
 	}).catch(function (err) {console.log(err); res.end();});
 });
 
