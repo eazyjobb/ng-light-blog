@@ -25,13 +25,22 @@ tweet_schema.virtual('author').get(function () {
 var tweet_table = module.exports = mongoose.model('tweet', tweet_schema);
 
 tweet_table.insert_tweet = function(new_tweet, callback) {
+
+	var time = parseInt(new_tweet.date.getTime() / 1000 / 60 / 60 / 24);
+	time = time * 24 * 60 * 60 * 1000;
+	//console.log(new_tweet.date, new_tweet.date.getTime());
+	new_tweet.date = new Date(time);
+	//console.log(new_tweet.date, time);
+
 	var query = {user_id: new_tweet.user_id, date: new_tweet.date};
 
 	tweet_table.findOne(query, function (err, tweet) {
 		if (err) throw err;
 
 		if (tweet) {
-			tweet.msg = new_tweet.msg
+			//console.log(tweet.date, tweet.description, 1);
+			tweet.description = new_tweet.description;
+			//console.log(tweet.date, tweet.description, 2);
 			tweet.save(callback);
 		}else
 			new_tweet.save(callback);
