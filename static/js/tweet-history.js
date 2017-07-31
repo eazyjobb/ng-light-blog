@@ -4,21 +4,24 @@ $(document).ready(function () {
 
 	$('#history').visibility({
 		once: false,
+		continuous:true,
 		observeChanges: true,
 		onBottomVisible: function() {
 			if (hv_counter)
 				return;
 			$.ajax({
 				url: "/today/history/data/",
-				data: JSON.stringify({date: hv_date}),
+				data: {
+					time: hv_date.getTime()
+				},
 				contentType: 'application/json',
 				dataType: 'json',
 				type: "GET",
 				success: function (result) {
 					if (hv_counter)
 						return;
-					//yesterday
-					hv_date.setTime(hv_date.getTime() - 1000 * 60 * 60 * 24);
+
+					console.log(result);
 					if (result["empty"])
 						return;
 					if (result["end"]) {
@@ -35,22 +38,25 @@ $(document).ready(function () {
 
 					//console.log(result, result.happiness, result.sadness);
 
-					for (var x in result.happiness) {
-						last_day.append(
-							$('<div class="ui positive message">').html('\
-								<p>' + result.happiness[x].description + '</p>\
-								<p> --- ' + result.happiness[x].author + '</p>'
-							)
-						);
+					for (var x in result) {
+						if (result[x].type)
+							last_day.append(
+								$('<div class="ui positive message">').html('\
+									<p>' + result[x].description + '</p>\
+									<p> --- ' + result[x].author + '</p>'
+								)
+							);
+						else
+							last_day.append(
+								$('<div class="ui info message">').html('\
+									<p>' + result[x].description + '</p>\
+									<p> --- ' + result[x].author + '</p>'
+								)
+							);
 					}
-					for (var x in result.sadness) {
-						last_day.append(
-							$('<div class="ui info message">').html('\
-								<p>' + result.sadness[x].description + '</p>\
-								<p> --- ' + result.sadness[x].author + '</p>'
-							)
-						);
-					}
+
+					//yesterday
+					hv_date.setTime(hv_date.getTime() - 1000 * 60 * 60 * 24);
 				},
 				error: function () {
 					if (hv_counter)

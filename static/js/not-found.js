@@ -46,8 +46,7 @@ $(document).ready(function () {
 
 	notFoundPlace();
 
-	if (navigator.userAgent.indexOf('iPhone') != -1)
-		setTimeout('$(window).resize()', 500);
+	setTimeout('$(window).resize()', 500);
 
 	$(window).resize(notFoundPlace);
 });

@@ -36,6 +36,7 @@ user_table.compare_password = function(password, password_hash, callback) {
 		callback(null, match);
 	});
 }
+
 /*
 var admin = new user_table({
 	name: 'admin',

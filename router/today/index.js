@@ -1,126 +1,98 @@
 var express = require('express'), 
 	router = express.Router(), 
 	render = require('../../render'), 
-	authorized = require('../authorized');
+	authorized = require('../authorized'),
+	tweet = require('../../model/tweet'),
+	user = require('../../model/user'),
+	promise = require('bluebird');
 
 router.get('/', function (req, res) {
-	res.send(render.base({
-		title: '今日事',
-		header: render.header({
+	var happiness = [], sadness = [];
+
+	promise.delay(0).then(function () {
+		return tweet
+			.get_tweet_by_top10(true)
+			.then(function (result) {
+				var queue = [];
+				result.forEach(function (entry) {
+					queue.push(
+						user.findById(entry.user_id)
+							.then(function (result) {
+								happiness.push({
+									author:result.name,
+									date: entry.date,
+									description: entry.description
+								});
+							})
+					);
+				});
+				return promise.all(queue);
+		}).catch(function (err) {console.log(err);});
+	}).then(function () {
+		return tweet
+			.get_tweet_by_top10(false)
+			.then(function (result) {
+				var queue = [];
+				result.forEach(function (entry) {
+					queue.push(
+						user.findById(entry.user_id)
+							.then(function (result) {
+								sadness.push({
+									author:result.name,
+									date: entry.date,
+									description: entry.description
+								});
+							})
+					);
+				});
+				return promise.all(queue);
+		}).catch(function (err) {console.log(err);});
+	}).then(function () {
+		res.send(render.base({
 			title: '今日事',
-			description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>'
-		}),
-		content: render.today({
-			happiness: [{
-				author: "Ng",
-				description: "末日尼哥上线了",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "末日尼哥上线了",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "末日尼哥上线了",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "末日尼哥上线了",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "末日尼哥上线了",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "末日尼哥上线了末日尼哥上线了末日尼哥上线了末日尼哥上线了末日尼哥上线了末日尼哥上线了末日尼哥上线了末日尼哥上线了末日尼哥上线了",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "末日尼哥上线了",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "末日尼哥上线了",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "末日尼哥上线了",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "末日尼哥上线了",
-				date: new Date('2017/07/28')
-			}],
-			sadness: [{
-				author: "Ng",
-				description: "好想吃螺蛳粉",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "好想吃螺蛳粉好想吃螺蛳粉",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉",
-				date: new Date('2017/07/28')
-			},{
-				author: "Ng",
-				description: "好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉",
-				date: new Date('2017/07/28')
-			}],
-		}),
-		bottom: render.bottom()
-	}));
+			header: render.header({
+				title: '今日事',
+				description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>'
+			}),
+			content: render.today({
+				happiness: happiness,
+				sadness: sadness,
+			}),
+			bottom: render.bottom()
+		}));
+	}).catch(function (err) {console.log(err); res.end();});
 });
 
 router.get('/history/data/', function (req, res) {
-	//console.log(req.query);
-	res.json({happiness: [{
-		author: "Ng",
-		description: "末日尼哥上线了",
-		date: new Date('2017/07/28')
-	},{
-		author: "Ng",
-		description: "末日尼哥上线了",
-		date: new Date('2017/07/28')
-	},{
-		author: "Ng",
-		description: "末日尼哥上线了",
-		date: new Date('2017/07/28')
-	}], sadness:[{
-		author: "Ng",
-		description: "末日尼哥上线了",
-		date: new Date('2017/07/28')
-	},{
-		author: "Ng",
-		description: "好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉",
-		date: new Date('2017/07/28')
-	},{
-		author: "Ng",
-		description: "好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉好想吃螺蛳粉",
-		date: new Date('2017/07/28')
-	}]});
+	var date = new Date(parseInt(req.query.time));
+	var happiness = [];
+	promise.delay(0).then(function () {
+		return tweet
+			.get_tweet_by_date(date)
+			.then(function (result) {
+				var queue = [];
+				result.forEach(function (entry) {
+					queue.push(
+						user.findById(entry.user_id)
+							.then(function (result) {
+								happiness.push({
+									author:result.name,
+									description: entry.description
+								});
+							})
+					);
+				});
+				return promise.all(queue);
+			})
+			.catch(function (err) {console.log(err);});
+	}).then(function () {
+		if (happiness.length == 0) {
+			res.json({empty:1});
+			return;
+		}
+		//console.log(happiness);
+		res.json(happiness);
+	}).catch(function (err) {console.log(err); res.end();});
 });
 
 router.get('/history', function (req, res) {
