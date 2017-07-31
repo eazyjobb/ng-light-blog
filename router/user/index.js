@@ -36,6 +36,13 @@ passport.deserializeUser(function (id, done) {
 router.get('/', authorized(), function (req, res) {
 	res.send(render.base({
 		title: 'User Page',
+		header: render.header({
+			title: "将就用啦，哪来精力给你们ui啊",
+			description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>',
+			login: req.user || false
+		}),
+		bottom: render.bottom(),
+		content: render.write_tweet(),
 		error: render.error(req.flash('error')),
 		info: render.info(req.flash('info'))
 	}));
@@ -136,7 +143,7 @@ router.get('/logout',
 	function (req, res){
 		req.logout();
 		req.flash('info', 'Logout Successful');
-		res.redirect('/user/login');
+		res.redirect('/today');
 	}
 );
 

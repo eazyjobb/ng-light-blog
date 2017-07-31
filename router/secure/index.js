@@ -18,7 +18,8 @@ router.get('/debug/', function (req, res) {
 		title: 'debug error test',
 		header: render.header({
 			title:"Debug Page",
-			description: "<p>Under Construction</p>"
+			description: "<p>Under Construction</p>",
+			login: req.user || false
 		}),
 		content: render.blog_content({
 			author: render.author(),

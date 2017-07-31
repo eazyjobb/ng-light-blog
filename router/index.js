@@ -24,8 +24,13 @@ router.use('/today', today);
 router.use('*', function (req, res) {
 	res.send(render.base({
 		title: '404 Not Found',
-		error: render.error(req.flash('error')),
-		info: render.info(req.flash('info'))
+		header: render.header({
+			title: '你要访问的页面不存在',
+			description: '<p>或者你在试图做些越权的事 :)</p>',
+			login: req.user || false
+		}),
+		content: render.not_found(),
+		bottom: render.bottom()
 	}));
 });
 
