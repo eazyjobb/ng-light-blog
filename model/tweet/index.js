@@ -32,7 +32,7 @@ tweet_table.insert_tweet = function(new_tweet, callback) {
 	new_tweet.date = new Date(time);
 	//console.log(new_tweet.date, time);
 
-	var query = {user_id: new_tweet.user_id, date: new_tweet.date};
+	var query = {user_id: new_tweet.user_id, date: new_tweet.date, type: new_tweet.type};
 
 	tweet_table.findOne(query, function (err, tweet) {
 		if (err) throw err;
