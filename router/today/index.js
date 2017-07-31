@@ -79,6 +79,7 @@ router.get('/history/data/', function (req, res) {
 								happiness.push({
 									author:result.name,
 									description: entry.description
+									type: entry.type
 								});
 							})
 					);
