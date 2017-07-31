@@ -26,7 +26,8 @@ router.use('*', function (req, res) {
 		title: '404 Not Found',
 		header: render.header({
 			title: '你要访问的页面不存在',
-			description: '<p>或者你在试图做些越权的事 :)</p>'
+			description: '<p>或者你在试图做些越权的事 :)</p>',
+			login: req.user || false
 		}),
 		content: render.not_found(),
 		bottom: render.bottom()

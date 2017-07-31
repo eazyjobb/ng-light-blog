@@ -18,6 +18,14 @@
 		<a href="/today" class="ui right floated item header-large">今日事</a>
 		<a href="#" class="ui right floated item header-large">作品集</a>
 		<a href="#" class="ui right floated item header-large">留言版</a>
+
+		{{ if (it.login) {                                               }}
+		<a href="/user" class="ui right floated item header-large">用户</a>
+		<a href="/user/logout" class="ui right floated item header-large">登出</a>
+		{{ } else {                                                      }}
+		<a href="/user/login" class="ui right floated item header-large">登陆</a>
+		<a href="/user/register" class="ui right floated item header-large">注册</a>
+		{{ }                                                             }}
 		
 		<a class="ui right floated dropdown item header-tiny">
 			<i class="sidebar icon"></i>
@@ -26,6 +34,13 @@
 				<div href="/today" class="item manu-jump">今日事</div>
 				<div href="#" class="item">作品集</div>
 				<div href="#" class="item">留言版</div>
+				{{ if (it.login) {                                               }}
+					<div href="/user" class="item manu-jump">用户</div>
+					<div href="/user/logout" class="item manu-jump">登出</div>
+				{{ } else {                                                      }}
+					<div href="/user/login" class="item manu-jump">登陆</div>
+					<div href="/user/register" class="item manu-jump">注册</div>
+				{{ }                                                             }}
 			</div>
 		</a>
 

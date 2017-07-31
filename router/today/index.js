@@ -52,7 +52,8 @@ router.get('/', function (req, res) {
 			title: '今日事',
 			header: render.header({
 				title: '今日事',
-				description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>'
+				description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>',
+				login: req.user || false
 			}),
 			content: render.today({
 				happiness: happiness,
@@ -102,7 +103,8 @@ router.get('/history', function (req, res) {
 		title: '当年今日',
 		header: render.header({
 			title: '当年今日',
-			description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>'
+			description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>',
+			login: req.user || false
 		}),
 		content: render.tweet_history(),
 		bottom: render.bottom()
