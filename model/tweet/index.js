@@ -84,6 +84,7 @@ var tester = new tweet_table({
 
 tweet_table.insert_tweet(tester);
 
+/*
 tester = new tweet_table({
 	user_id: '597ebcb9a90a8754dc748c08',
 	date: new Date('2017/07/30'),
@@ -153,3 +154,4 @@ tester = new tweet_table({
 });
 
 tweet_table.insert_tweet(tester);
+*/
