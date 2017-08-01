@@ -31,7 +31,7 @@ $(document).ready(function () {
 			$('#load_more_tweet_button').remove();
 			return;
 		}
-         console.log("continue");
+        
 		$('#history').append('<div class="a-day">');
 		var last_day = $(".a-day:last");
 		last_day.append($('<div class="ui horizontal divider">').html(hv_date.toDateString()));
