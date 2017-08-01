@@ -13,7 +13,6 @@ $(document).ready(function () {
 
 	infScroll.on( 'load', function( response ) {
 		var data = JSON.parse( response );
-		
 		console.log(data);
 
 		if (data.empty == 1) {
@@ -29,9 +28,10 @@ $(document).ready(function () {
 			var last_day = $(".a-day:last");
 			last_day.append($('<div class="ui horizontal divider">').html('没了，就这么多'));
 
+			$('#load_more_tweet_button').remove();
 			return;
 		}
-
+        
 		$('#history').append('<div class="a-day">');
 		var last_day = $(".a-day:last");
 		last_day.append($('<div class="ui horizontal divider">').html(hv_date.toDateString()));
@@ -55,6 +55,11 @@ $(document).ready(function () {
 
 		hv_date = new Date(hv_date.getTime() - 1000 * 60 * 60 * 24);
 	});
-
 	infScroll.loadNextPage();
+	
+	document.getElementById("load_more_tweet_button").style.marginBottom="1em";
+	
+	$('#load_more_tweet_button').click(function() {
+		infScroll.loadNextPage();
+	});
 });

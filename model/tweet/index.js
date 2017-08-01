@@ -73,10 +73,81 @@ tweet_table.num_of_tweet_before_date = function(date, callback) {
 	return tweet_table.count(query, callback);
 }
 
-/*
+
 var tester = new tweet_table({
-	user_id: '456',
-	date: new Date(),
+	user_id: '597ebcb9a90a8754dc748c08',
+	date: new Date('2017/07/30'),
+	description: '123456',
+	type: false,
+	agree: 1
+});
+
+tweet_table.insert_tweet(tester);
+
+/*
+tester = new tweet_table({
+	user_id: '597ebcb9a90a8754dc748c08',
+	date: new Date('2017/07/30'),
+	description: '123456',
+	type: false,
+	agree: 1
+});
+
+tweet_table.insert_tweet(tester);
+
+tester = new tweet_table({
+	user_id: '597ebcb9a90a8754dc748c08',
+	date: new Date('2017/07/29'),
+	description: '123456',
+	type: false,
+	agree: 1
+});
+
+tweet_table.insert_tweet(tester);
+
+tester = new tweet_table({
+	user_id: '597ebcb9a90a8754dc748c08',
+	date: new Date('2017/07/28'),
+	description: '123456',
+	type: false,
+	agree: 1
+});
+
+tweet_table.insert_tweet(tester);
+
+tester = new tweet_table({
+	user_id: '597ebcb9a90a8754dc748c08',
+	date: new Date('2017/07/27'),
+	description: '123456',
+	type: false,
+	agree: 1
+});
+
+tweet_table.insert_tweet(tester);
+
+tester = new tweet_table({
+	user_id: '597ebcb9a90a8754dc748c08',
+	date: new Date('2017/07/26'),
+	description: '123456',
+	type: false,
+	agree: 1
+});
+
+tweet_table.insert_tweet(tester);
+
+tester = new tweet_table({
+	user_id: '597ebcb9a90a8754dc748c08',
+	date: new Date('2017/07/25'),
+	description: '123456',
+	type: false,
+	agree: 1
+});
+
+tweet_table.insert_tweet(tester);
+
+tester = new tweet_table({
+	user_id: '597ebcb9a90a8754dc748c08',
+	date: new Date('2017/07/24'),
 	description: '123456',
 	type: false,
 	agree: 1
