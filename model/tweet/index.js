@@ -9,19 +9,14 @@ var tweet_schema = mongoose.Schema({
 	type: {type: Boolean},
 	agree: {type: Number}
 });
-/*
-tweet_schema.virtual('author').get(function () {
-	var res = "[deleted]";
 
-	return user.findById(this.user_id, function (err, user) {
-		if (err)
-			throw err;
-		if (user)
-			res = user.name;
-		console.log(1);
-	});
+tweet_schema.virtual('user', {
+	ref: 'User',
+	localField: 'user_id',
+	foreignField: '_id',
+	justOne: true
 });
-*/
+
 var tweet_table = module.exports = mongoose.model('tweet', tweet_schema);
 
 tweet_table.insert_tweet = function(new_tweet, callback) {
@@ -60,7 +55,7 @@ tweet_table.get_tweet_by_date = function(date, callback) {
 }
 
 tweet_table.get_tweet_by_top10 = function(type, callback) {
-	return tweet_table.find({type: type}).sort({date: -1}).limit(10).exec();
+	return tweet_table.find({type: type}).sort({date: -1}).limit(10);
 }
 
 tweet_table.num_of_tweet_before_date = function(date, callback) { 
@@ -73,7 +68,7 @@ tweet_table.num_of_tweet_before_date = function(date, callback) {
 	return tweet_table.count(query, callback);
 }
 
-
+/*
 var tester = new tweet_table({
 	user_id: '597ebcb9a90a8754dc748c08',
 	date: new Date('2017/07/30'),
@@ -84,7 +79,6 @@ var tester = new tweet_table({
 
 tweet_table.insert_tweet(tester);
 
-/*
 tester = new tweet_table({
 	user_id: '597ebcb9a90a8754dc748c08',
 	date: new Date('2017/07/30'),
