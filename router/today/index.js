@@ -12,41 +12,29 @@ router.get('/', function (req, res) {
 	promise.delay(0).then(function () {
 		return tweet
 			.get_tweet_by_top10(true)
-			.then(function (result) {
-				var queue = [];
-				result.forEach(function (entry) {
-					queue.push(
-						user.findById(entry.user_id)
-							.then(function (result) {
-								happiness.push({
-									author:result.name,
-									date: entry.date,
-									description: entry.description
-								});
-							})
-					);
+			.populate({ path: 'user', select: 'name'})
+			.exec(function(error, tweet) {
+				tweet.forEach(function (entry) {
+					happiness.push({
+						author:entry.user.name,
+						date: entry.date,
+						description: entry.description	
+					});
 				});
-				return promise.all(queue);
-		}).catch(function (err) {console.log(err);});
+			}).catch(function (err) {console.log(err);});
 	}).then(function () {
 		return tweet
 			.get_tweet_by_top10(false)
-			.then(function (result) {
-				var queue = [];
-				result.forEach(function (entry) {
-					queue.push(
-						user.findById(entry.user_id)
-							.then(function (result) {
-								sadness.push({
-									author:result.name,
-									date: entry.date,
-									description: entry.description
-								});
-							})
-					);
+			.populate({ path: 'user', select: 'name'})
+			.exec(function(error, tweet) {
+				tweet.forEach(function (entry) {
+					sadness.push({
+						author:entry.user.name,
+						date: entry.date,
+						description: entry.description	
+					});
 				});
-				return promise.all(queue);
-		}).catch(function (err) {console.log(err);});
+			}).catch(function (err) {console.log(err);});
 	}).then(function () {
 		res.send(render.base({
 			title: '今日事',
@@ -67,36 +55,27 @@ router.get('/', function (req, res) {
 router.get('/history/data/', function (req, res) {
 	var date = new Date(parseInt(req.query.time));
 	var happiness = [];
-	promise.delay(0).then(function () {
-		return tweet
-			.get_tweet_by_date(date)
-			.then(function (result) {
-				var queue = [];
-				result.forEach(function (entry) {
-					queue.push(
-						user.findById(entry.user_id)
-							.then(function (result) {
-								happiness.push({
-									author:result.name,
-									description: entry.description,
-									type: entry.type
-								});
-							})
-					);
+	tweet.get_tweet_by_date(date)
+		.populate({ path: 'user', select: 'name'})
+		.exec(function(error, tweet) {
+			tweet.forEach(function (entry) {
+				happiness.push({
+					author:entry.user.name,
+					type: entry.type,
+					description: entry.description	
 				});
-				return promise.all(queue);
-			})
-			.catch(function (err) {console.log(err);});
-	}).then(function () {
-		if (happiness.length == 0) {
-			tweet.num_of_tweet_before_date(date).then(function (count) {
-				if (count == 0)
-					res.json({end:1});
-				else
-					res.json({empty:1});
 			});
-		} else res.json(happiness);
-	}).catch(function (err) {console.log(err); res.end();});
+		})
+		.then(function () {
+			if (happiness.length == 0) {
+				tweet.num_of_tweet_before_date(date).then(function (count) {
+					if (count == 0)
+						res.json({end:1});
+					else
+						res.json({empty:1});
+				});
+			} else res.json(happiness);
+		}).catch(function (err) {console.log(err); res.end();});
 });
 
 router.get('/history', function (req, res) {
