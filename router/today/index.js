@@ -41,7 +41,8 @@ router.get('/', function (req, res) {
 			header: render.header({
 				title: '今日事',
 				description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>',
-				login: req.user || false
+				login: req.user || false,
+				notice_info: false
 			}),
 			content: render.today({
 				happiness: happiness,
