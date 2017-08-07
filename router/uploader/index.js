@@ -33,7 +33,11 @@ router.post('/avatar/', function(req, res) {
 			}
 
 			//if (mime == '.jpg')
-				fs.rename('./tmp/' + req.file.filename, swd + '/avatar.jpg');
+				fs.rename('./tmp/' + req.file.filename, swd + '/avatar.jpg',
+					function (err) {
+						if (err)
+							throw err;
+				});
 			//else
 			//	images('./tmp/' + req.file.filename)
 			//		.encode(swd + '/avatar.jpg', { operation: 100 });
