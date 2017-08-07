@@ -42,7 +42,7 @@ router.get('/', function (req, res) {
 				title: '今日事',
 				description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>',
 				login: req.user || false,
-				notice_info: true
+				notice_info: false
 			}),
 			content: render.today({
 				happiness: happiness,
