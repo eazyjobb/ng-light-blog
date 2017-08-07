@@ -42,7 +42,7 @@ router.get('/', authorized(), function (req, res) {
 			login: req.user || false
 		}),
 		bottom: render.bottom(),
-		content: render.write_tweet(),
+		content: render.user_page(),
 		error: render.error(req.flash('error')),
 		info: render.info(req.flash('info'))
 	}));

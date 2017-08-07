@@ -3,32 +3,46 @@ var express = require('express'),
 	render = require('../../render'),
 	multer  = require('multer'),
 	small_upload = multer({ dest: 'tmp/', limits: {
-		fileSize: 50000
+		fileSize: 1024 * 1024,
+
 	}}),
-	authorized = require('../authorized');
+	authorized = require('../authorized'),
+	fs = require('fs');
 
 router.use(authorized());
 
-router.get('/', function(req, res) {
-	res.send(render.base({
-		title: 'Upload',
-		content: render.upload(),
-		error: render.error(req.flash('error')),
-		info: render.info(req.flash('info'))
-	}));
-});
-
-router.post('/', function(req, res) {
-	small_upload.single('tester')(req, res, function (err) {
+router.post('/avatar/', function(req, res) {
+	small_upload.single('avatar')(req, res, function (err) {
 		if (err) {
 			req.flash('error', err.message);
-			res.redirect('/upload');
+			res.redirect('/user');
 			return;
 		}
-		req.flash('info', 'Upload successful');
-		res.redirect('/user');
+
+		var swd = './static/user/' + req.user._id;
+		var mime = '.' + req.file.originalname.split('.').pop();
+
+		if (mime != '.jpg'){
+			req.flash('error', 'sorry, jpg only');
+			res.redirect('/user');
+		} else
+		fs.mkdir(swd, function (err) {
+			if (err && err.code != 'EEXIST') {
+				console.log(err.code);
+				throw err;
+			}
+
+			//if (mime == '.jpg')
+				fs.rename('./tmp/' + req.file.filename, swd + '/avatar.jpg');
+			//else
+			//	images('./tmp/' + req.file.filename)
+			//		.encode(swd + '/avatar.jpg', { operation: 100 });
+			req.flash('info', 'Upload Avatar successful');
+			res.redirect('/user');
+		});
+
 		return null;
-	})
+	});
 });
 
 module.exports = router;

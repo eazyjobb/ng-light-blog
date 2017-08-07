@@ -1,0 +1,36 @@
+<div class="ui text container">
+
+<div class="ui row">
+	<div class="ui text container segment">
+		<div class="ui images">
+			<img src="/getavatar/req_id" class="ui small bordered rounded image"/>
+			<img src="/getavatar/req_id" class="ui tiny bordered rounded image"/>
+			<img src="/getavatar/req_id" class="ui mini bordered rounded image"/>
+		</div>
+		<form method="post" enctype="multipart/form-data" action="/upload/avatar">
+			<input type="file" name="avatar"/>
+			<input type="submit" class="ui positive button" value="上传头像"/>
+		</form>
+		<p>只支持jpg，头像拉伸到正方形。（最好自行裁剪。）</p>
+	</div>
+</div>
+
+<div class="ui row">
+	<div class="ui text container segment">
+		<label>今日最气</label>
+		<input type="text" name="sadness" placeholder="今日最气">
+		<button class="ui button sadness">更新最气</button>
+	</div>
+</div>
+
+<div class="ui row">
+	<div class="ui text container segment">
+		<label>今日最囍</label>
+		<input type="text" name="happiness" placeholder="今日最囍">
+		<button class="ui button happiness">更新最囍</button>
+	</div>
+</div>
+
+</div>
+
+<script language="javascript" type="text/javascript" src="/static/js/write-tweet.js"></script>
