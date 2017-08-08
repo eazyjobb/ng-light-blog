@@ -2,9 +2,10 @@ var express = require('express'),
 	router = express.Router(), 
 	render = require('../../render'),
 	fs = require('fs'),
-	user = require('../../model/user');
+	user = require('../../model/user'),
+	authorized = require('../authorized');
 
-router.get('/req_id', function(req, res) {
+router.get('/req_id', authorized(), function(req, res) {
 	var avatar_location = './static/user/' + req.user._id + '/avatar.jpg';
 	var avatar_url = '/static/user/' + req.user._id + '/avatar.jpg';
 	fs.access(avatar_location, fs.constants.F_OK, function (err) {
