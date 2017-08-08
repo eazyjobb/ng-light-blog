@@ -6,7 +6,8 @@ var express = require('express'),
 	blog_pages = require('./blog-pages'),
 	uploader = require('./uploader'),
 	today = require('./today'),
-	avatar = require('./avatar');
+	avatar = require('./avatar'),
+	messageboard = require('./messageboard');
 
 router.get('/', function(req, res) {
 	res.send(render.base({
@@ -22,6 +23,7 @@ router.use('/secure', secure);
 router.use('/upload', uploader);
 router.use('/today', today);
 router.use('/getavatar', avatar);
+router.use('/messageboard', messageboard);
 
 router.use('*', function (req, res) {
 	res.send(render.base({

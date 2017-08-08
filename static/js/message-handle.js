@@ -4,6 +4,7 @@ $(document).ready(function() {
 			$('#message').transition('fade');
 		else
 			$(this).closest('.message').transition('fade');
+		setTimeout('$(window).resize();', 500);
 	});
 	message_place();
 	$(window).resize(message_place);

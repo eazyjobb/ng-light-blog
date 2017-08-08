@@ -1,0 +1,31 @@
+<link href="/static/css/msgb.css" rel="stylesheet" type="text/css" />
+
+<div class="ui text container">
+	<div class="ui segment">
+		{{	if (it.login) {		}}
+		<form class="ui msg form" method="post" action="/messageboard/post">
+		{{	}else{ 				}}
+		<form class="ui error msg form">
+		{{	}					}}
+			<div class="ui top attached red basic label">
+				{{	if (it.login) {		}}
+				{{		=it.login.name	}}，
+				{{	}					}}
+				你来放点黑屁吧
+			</div>
+			<textarea name="message" class="msg-text"></textarea>
+
+			<div class="ui error message">
+				<div class="header">请登陆</div>
+				<p>你怎么也发不出去的，信我。</p>
+			</div>
+
+			{{	if (it.login) {		}}
+			<input class="ui right floated positive basic button" value="发布" type="submit" />
+			{{	}else{ 				}}
+			<input class="ui right floated disabled negative basic button" value="发布" type="submit" />
+			{{	}					}}
+
+		</form>
+	</div>
+</div>

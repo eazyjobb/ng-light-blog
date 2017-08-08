@@ -1,12 +1,18 @@
-<h2 class="page-header">Account Login</h2>
-<form method="post" action="/user/login">
-	<div class="form-group">
-		<label>Username</label>
-		<input type="text" class="form-control" name="username" placeholder="Username">
+<div class="ui text container">
+	<div class="ui centered grid">
+		<div class="ui column" style="max-width:400px;margin-top:2em;margin-bottom:2em;">
+			<div class="ui huge header">Account Login</div>
+			<form class="ui form" method="post" action="/user/login">
+				<div style="position:relative;margin-bottom:2em;">
+					<div class="ui top attached large label">Username</div>
+					<input type="text" name="username" placeholder="Username">
+				</div>
+				<div style="position:relative;margin-bottom:2em;">
+					<div class="ui top attached large label">Password</div>
+					<input type="password" name="password" placeholder="Password">
+				</div>
+				<button type="submit" class="ui right floated positive button">Submit</button>
+			</form>
+		</div>
 	</div>
-	<div class="form-group">
-		<label>Password</label>
-		<input type="password" class="form-control" name="password" placeholder="Password">
-	</div>
-	<button type="submit" class="btn btn-default">Submit</button>
-</form>
+</div>
