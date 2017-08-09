@@ -93,6 +93,7 @@ router.get('/history', function (req, res) {
 });
 
 router.post('/update', authorized(), function (req, res) {
+	console.log(req.user);
 	var id = req.user._id.toString();
 
 	if (req.body.omsg.length > 140) {

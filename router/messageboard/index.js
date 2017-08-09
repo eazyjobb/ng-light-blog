@@ -2,6 +2,7 @@ var express = require('express'),
 	router = express.Router(), 
 	render = require('../../render'),
 	user = require('../../model/user'),
+	msg_board = require('../../model/msg_board');
 	authorized = require('../authorized');
 
 router.get('/', function (req, res) {
@@ -21,10 +22,26 @@ router.get('/', function (req, res) {
 	}));
 });
 
-router.post('/post', function (req, res) {
-
-	console.log(req.body);
-
+router.post('/post', function (req, res) {	
+	if (req.body.message.length > 1000) {
+		req.flash('error', "tl;dr. too long dont read. 内容长度大于1000！");
+		res.end();
+		return ;
+	}
+	var new_msg_board = new msg_board({
+		root_id: "NONE",
+		reply_id: "NONE",
+		user_id: req.user._id,
+		msg: req.body.message,
+		date: new Date()
+	});
+	new_msg_board.root_id = new_msg_board._id;
+	msg_board.insert_msg(new_msg_board, function(err) {
+		if (err)
+			throw err;
+		req.flash('info', '帖子发布成功');
+		res.end();
+	});
 	res.redirect('./');
 });
 
