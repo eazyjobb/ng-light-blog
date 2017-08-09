@@ -55,7 +55,13 @@ router.get('/login',
 			title: 'Log In',
 			content: render.login(),
 			error: render.error(req.flash('error')),
-			info: render.info(req.flash('info'))
+			info: render.info(req.flash('info')),
+			header: render.header({
+				title: '登录',
+				description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>',
+				login: false
+			}),
+			bottom: render.bottom()
 		}));
 	}
 );
@@ -67,7 +73,13 @@ router.get('/register',
 			title: 'Register',
 			content: render.register(),
 			error: render.error(req.flash('error')),
-			info: render.info(req.flash('info'))
+			info: render.info(req.flash('info')),
+			header: render.header({
+				title: '注册',
+				description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>',
+				login: false
+			}),
+			bottom: render.bottom()
 		}));
 	}
 );
