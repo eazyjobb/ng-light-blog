@@ -25,6 +25,10 @@ router.use('/today', today);
 router.use('/getavatar', avatar);
 router.use('/messageboard', messageboard);
 
+router.use('/favicon.ico', function (req, res) {
+	res.redirect('/static/img/favicon.ico');
+});
+
 router.use('*', function (req, res) {
 	res.send(render.base({
 		title: '404 Not Found',
