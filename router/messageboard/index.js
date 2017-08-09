@@ -10,7 +10,7 @@ router.get('/', function (req, res) {
 		title:'留言版',
 		header: render.header({
 			title: '留言版',
-			description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>',
+			description: '<p>又急又气，正在施工中</p><p>logo呢已经更新了，你说好不好啊</p>',
 			login: req.user || false
 		}),
 		info: render.info(req.flash('info')),

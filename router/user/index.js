@@ -38,7 +38,7 @@ router.get('/', authorized(), function (req, res) {
 		title: 'User Page',
 		header: render.header({
 			title: "将就用啦，哪来精力给你们ui啊",
-			description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>',
+			description: '<p>又急又气，正在施工中</p><p>logo呢已经更新了，你说好不好啊</p>',
 			login: req.user || false
 		}),
 		bottom: render.bottom(),
@@ -58,7 +58,7 @@ router.get('/login',
 			info: render.info(req.flash('info')),
 			header: render.header({
 				title: '登录',
-				description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>',
+				description: '<p>又急又气，正在施工中</p><p>logo呢已经更新了，你说好不好啊</p>',
 				login: false
 			}),
 			bottom: render.bottom()
@@ -155,7 +155,7 @@ router.get('/logout',
 	function (req, res){
 		req.logout();
 		req.flash('info', 'Logout Successful');
-		res.redirect('/today');
+		res.redirect('/');
 	}
 );
 
