@@ -94,6 +94,13 @@ router.get('/history', function (req, res) {
 
 router.post('/update', authorized(), function (req, res) {
 	var id = req.user._id.toString();
+
+	if (req.body.omsg.length > 140) {
+		req.flash('error', "tl;dr. too long dont read. 太长不要。");
+		res.end();
+		return;
+	}
+
 	var new_tweet = new tweet({
 		user_id: id,
 		date: new Date(),
