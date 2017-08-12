@@ -5,6 +5,23 @@ var express = require('express'),
 	msg_board = require('../../model/msg_board');
 	authorized = require('../authorized');
 
+router.get('/data', function (req, res) {
+	//res.json({end:1});
+	res.json([{
+		msg: "123",
+		author: "ngzm",
+		user_name: "ngzm",
+		msg_id:"abcdefg",
+		date: new Date().getTime()
+	},{
+		msg: "456",
+		author: "iasfhsadh",
+		user_name: "ngzm",
+		msg_id:"abcdefg",
+		date: new Date().getTime()
+	}]);
+});
+
 router.get('/', function (req, res) {
 	res.send(render.base({
 		title:'留言版',
@@ -15,9 +32,7 @@ router.get('/', function (req, res) {
 		}),
 		info: render.info(req.flash('info')),
 		error: render.error(req.flash('error')),
-		content: render.msgb({
-			login: req.user || false
-		}),
+		content: render.msgb({login: req.user || false}),
 		bottom: render.bottom()
 	}));
 });

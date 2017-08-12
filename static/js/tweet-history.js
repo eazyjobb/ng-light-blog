@@ -55,9 +55,8 @@ $(document).ready(function () {
 
 		hv_date = new Date(hv_date.getTime() - 1000 * 60 * 60 * 24);
 	});
+
 	infScroll.loadNextPage();
-	
-	document.getElementById("load_more_tweet_button").style.marginBottom="1em";
 	
 	$('#load_more_tweet_button').click(function() {
 		infScroll.loadNextPage();

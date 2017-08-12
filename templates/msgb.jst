@@ -29,3 +29,51 @@
 		</form>
 	</div>
 </div>
+
+<div class="ui text container" id="msgb-data">
+
+<script id="template-msgb" type="text/x-dot-template">
+((	for (var x in it) {		))
+<div class="ui segment">
+	<div style="position:relative;">
+
+		<img class="ui avatar rounded image" src="/getavatar/user_id/((=it[x].user_name))"/>
+		<span>((=it[x].author))</span>
+		<div class="ui right floated tiny header">
+		(( var oo = new Date(it[x].date); ))
+		((= oo.toLocaleTimeString() + ' ' + oo.toLocaleDateString() ))
+		</div>
+
+		
+		<p style="margin-top:1em;">((=it[x].msg))</p>
+		<div style="width: 100%;text-align: right;">
+			<div class="ui positive basic button">更多</div>
+		</div>
+
+	</div>
+</div>
+((	}								))
+</script>
+
+<div class="page-load-status">
+  <div class="loader-ellips infinite-scroll-request">
+    <span class="loader-ellips__dot"></span>
+    <span class="loader-ellips__dot"></span>
+    <span class="loader-ellips__dot"></span>
+    <span class="loader-ellips__dot"></span>
+  </div>
+  <p class="infinite-scroll-error">
+  	<div class="ui horizontal divider">服务器出错</div>
+  </p>
+</div>
+
+<div style="text-align: center">
+<button id="load_more_tweet_button" class="ui button" >加载更多</button>
+</div>
+
+</div>
+
+<script language="javascript" type="text/javascript" src="/static/js/infinite-scroll.pkgd.min.js"></script>
+<script language="javascript" type="text/javascript" src="/static/js/infinite-scroll.pkgd.min.js"></script>
+<script language="javascript" type="text/javascript" src="/static/js/doT.min.js"></script>
+<script language="javascript" type="text/javascript" src="/static/js/msgb.js"></script>
