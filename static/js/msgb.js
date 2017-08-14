@@ -18,11 +18,12 @@ $(document).ready(function () {
 	});
 
 	var outterMsg = doT.template($("#template-msgb").text());
+	var innerMsg = doT.template($("#template-msgb-detail").text());
 
 	infScroll.on( 'load', function(data) {
 		data = JSON.parse(data);
 
-		console.log(data);
+		//console.log(data);
 		
 		if (data.end == 1) {
 			infScroll.destroy();
@@ -34,6 +35,20 @@ $(document).ready(function () {
 		}
 
 		$('.page-load-status').before(outterMsg(data));
+		$('.more-btn').click(function () {
+			var obj = $(this);
+			$.ajax({
+				url: "/messageboard/get_comment",
+				data: {something:'here'},
+				type: "GET",
+				success: function(res) {
+					//console.log(res);
+					//console.log(obj);
+					obj.before(innerMsg(res));
+					obj.remove();
+				}
+			});
+		});
 	});
 
 	infScroll.loadNextPage();

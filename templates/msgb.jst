@@ -1,5 +1,7 @@
 <link href="/static/css/msgb.css" rel="stylesheet" type="text/css" />
 
+<div class="login_status" login="{{=it.login!=false}}"></div>
+
 <div class="ui text container">
 	<div class="ui segment">
 		{{	if (it.login) {		}}
@@ -32,10 +34,36 @@
 
 <div class="ui text container" id="msgb-data">
 
+<script id="template-msgb-detail" type="text/x-dot-template">
+
+(( for (x in it) {	))
+<div class="ui horizontal divider">
+	(( var oo = new Date(it[x].date); ))
+	((= oo.toLocaleTimeString() + ' ' + oo.toLocaleDateString() ))
+</div>
+
+<img class="ui avatar rounded image" src="/getavatar/user_id/((=it[x].user_name))"/>
+<span>((=it[x].author))</span>
+
+<p style="margin-top:1em;">((=it[x].msg))</p>
+(( } ))
+
+((	if ($('.login_status').attr('login') ) {		))
+<div class="ui horizontal divider"> 回复 </div>
+<div class="ui form">
+	<textarea style="max-height: 100px;"> </textarea>
+	<div style="width: 100%; text-align: right;" class="more-btn">
+		<div class="ui positive basic button" style="margin-top:1em;"> 发送 </div>
+	</div>
+</div>
+((	}											))
+
+</script>
+
 <script id="template-msgb" type="text/x-dot-template">
 ((	for (var x in it) {		))
 <div class="ui segment">
-	<div style="position:relative;">
+	<div style="position:relative;" msg_id="((=it[x].msg_id))" class="msg-box">
 
 		<img class="ui avatar rounded image" src="/getavatar/user_id/((=it[x].user_name))"/>
 		<span>((=it[x].author))</span>
@@ -46,7 +74,7 @@
 
 		
 		<p style="margin-top:1em;">((=it[x].msg))</p>
-		<div style="width: 100%;text-align: right;">
+		<div style="width: 100%; text-align: right;" class="more-btn" msg_id="((=it[x].msg_id))">
 			<div class="ui positive basic button">更多</div>
 		</div>
 
