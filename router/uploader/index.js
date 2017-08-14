@@ -19,6 +19,12 @@ router.post('/avatar/', function(req, res) {
 			return;
 		}
 
+		if (req.file == undefined) {
+			req.flash('error', 'pick a pic, please!');
+			res.redirect('/user');
+			return;
+		}
+
 		var swd = './static/user/' + req.user._id;
 		var mime = '.' + req.file.originalname.split('.').pop();
 
