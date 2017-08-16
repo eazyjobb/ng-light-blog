@@ -7,10 +7,13 @@ $(document).ready(function () {
 		append: true,
 		selfcontained: false
 	};
+	
+	var now_date = new Date();
 
 	var infScroll = new InfiniteScroll( '#msgb-data', {
 		path: function () {
-			return '/messageboard/data/';
+			return '/messageboard/data/' + 
+				   '?time=' + now_date.getTime();
 		},
 		responseType: 'text',
 		status: '.page-load-status',
@@ -19,11 +22,9 @@ $(document).ready(function () {
 
 	var outterMsg = doT.template($("#template-msgb").text());
 	var innerMsg = doT.template($("#template-msgb-detail").text());
-
+	
 	infScroll.on( 'load', function(data) {
 		data = JSON.parse(data);
-
-		//console.log(data);
 		
 		if (data.end == 1) {
 			infScroll.destroy();
@@ -32,20 +33,41 @@ $(document).ready(function () {
 			$('#load_more_tweet_button').remove();
 
 			return;
+		} else { // not empty
+			now_date = new Date(data[data.length - 1].date);
 		}
 
 		$('.page-load-status').before(outterMsg(data));
 		$('.more-btn').click(function () {
 			var obj = $(this);
+			var now_msg_id = obj.attr('msg_id');
+			
 			$.ajax({
 				url: "/messageboard/get_comment",
-				data: {something:'here'},
+				data: {msg_id: now_msg_id},
 				type: "GET",
 				success: function(res) {
 					//console.log(res);
 					//console.log(obj);
 					obj.before(innerMsg(res));
+					//console.log(innerMsg(res));
 					obj.remove();
+					
+					$('.reply-msgb-btn').click(function () {
+						var obj = $(this);
+						var txt = obj.siblings('textarea');
+						
+						$.ajax({
+							url: "/messageboard/post/reply_msgb",
+							data: {msg: txt[0].value,
+								   reply_msg_id: now_msg_id
+							},
+							type: "POST",
+							success: function(res) {
+								$(location).attr('href', './');
+							}
+						});
+					});
 				}
 			});
 		});

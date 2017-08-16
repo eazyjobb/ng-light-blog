@@ -7,11 +7,18 @@ var ref_link = require('../ref_link');
 
 
 var msg_board_schema = mongoose.Schema({
-	root_id: {type: String},  // *Õâ¸öÌû×ÓËùÔÚÁ´ÌõµÄ¸ù½Úµã
-	reply_id: {type: String}, // Èç¹ûÕâÊÇ³õÊ¼ÏûÏ¢¶ø·Ç»Ø¸´ÏêÏ¸£¬ÖÃÔ¼¶¨µÄNONEÖµ
-	user_id: {type: String},  // ·¢ÑÔÈËµÄid
-	msg: {type: String},	  // ÕıÎÄ£¬×ÖÊıÔ¼Êø
-	date: {type: Date}		  // ·¢±íÈÕÆÚ
+	root_id: {type: String},  // *è¿™ä¸ªå¸–å­æ‰€åœ¨é“¾æ¡çš„æ ¹èŠ‚ç‚¹
+	reply_id: {type: String}, // å¦‚æœè¿™æ˜¯åˆå§‹æ¶ˆæ¯è€Œéå›å¤è¯¦ç»†ï¼Œç½®çº¦å®šçš„NONEå€¼ï¼Œ
+	user_id: {type: String},  // å‘è¨€äººçš„id
+	msg: {type: String},	  // æ­£æ–‡ï¼Œå­—æ•°çº¦æŸ
+	date: {type: Date}		  // å‘è¡¨æ—¥æœŸ
+});
+
+msg_board_schema.virtual('user', {
+	ref: 'User', // ä¸ºä½•è¦å¤§å†™ï¼Ÿä¸å¤§å†™ä¼šé”™
+	localField: 'user_id',
+	foreignField: '_id',
+	justOne: true
 });
 
 var msg_board_table = module.exports = mongoose.model('msg_board', msg_board_schema);
@@ -19,47 +26,52 @@ var msg_board_table = module.exports = mongoose.model('msg_board', msg_board_sch
 /*
 	function:
 		insert_msg(new_msg, callback)
-		get_msg_by_date(date, callback) // ¸ù¾İÈÕÆÚ»ñÈ¡ÁôÑÔ°åÏûÏ¢£¬ÑÏ¸ñ°´Ê±¼äÅÅĞò£¡
+		get_msg_by_date(date, callback) // æ ¹æ®æ—¥æœŸè·å–ç•™è¨€æ¿æ¶ˆæ¯ï¼Œä¸¥æ ¼æŒ‰æ—¶é—´æ’åºï¼
 		num_of_msg_before_date(date, callback)
 		get_msg_by_user_id(user_id, callback) 	
-		get_msg_by_root_id(root_id, callback)   // *¸ù¾İ¸ùµÄÖµÌáÈ¡»Ø¸´Á´£¬°´Ê±¼äÅÅĞò
+		get_msg_by_root_id(root_id, callback)   // *æ ¹æ®æ ¹çš„å€¼æå–å›å¤é“¾ï¼ŒæŒ‰æ—¶é—´æ’åº
 */
 
 msg_board_table.insert_msg = function(new_msg, callback) {
-	// Ä¬ÈÏÇ°¶Ë½øĞĞÁËÔ¼Êø±£Ö¤£¿
+	// é»˜è®¤å‰ç«¯è¿›è¡Œäº†çº¦æŸä¿è¯ï¼Ÿ
 	console.log(new_msg);
-	new_msg.save(callback);
-	if (new_msg.reply_id != "NONE") {
-		var new_ref_link = new ref_link({
-			root_id: new_msg.root_id,
-			to_id: "NONE",
-			msg_id: new_msg._id,
-			date: new_msg.date,
-			read: false
-		});
-		
-		var to_id = "";
-		
-		promise.delay(0).then(function() {
-			msg_board_table.findById(new_msg.reply_id)
-						   .exec(function(err, msg) {
-								to_id = msg.user_id;
-							})
-							.catch(function (err) {
-								console.log(err);
-							});
-		}).then(function () {
-			new_ref_link.to_id = to_id;
-		}).then(function () {
-			ref_link.insert_ref_link(new_ref_link, function (err) {
-				if (err)
-					console.log(err);
+	promise.delay(0).then(function () {
+		new_msg.save(callback);
+	}).then(function () {
+		if (new_msg.reply_id != "NONE") {
+			/*  è§£æat
+			var new_ref_link = new ref_link({
+				root_id: new_msg.root_id,
+				to_id: "NONE",
+				msg_id: new_msg._id,
+				date: new_msg.date,
+				read: false
 			});
-		}).catch(function (err) {
-			console.log(err);
-			res.end();
-		});
-	}
+			
+			var to_id = "";
+			
+			promise.delay(0).then(function() {
+				msg_board_table.findById(new_msg.reply_id)
+							.exec(function(err, msg) {
+									to_id = msg.user_id;
+								})
+								.catch(function (err) {
+									console.log(err);
+								});
+			}).then(function () {
+				new_ref_link.to_id = to_id;
+			}).then(function () {
+				ref_link.insert_ref_link(new_ref_link, function (err) {
+					if (err)
+						console.log(err);
+				});
+			}).catch(function (err) {
+				console.log(err);
+				res.end();
+			});
+			*/
+		}
+	}).catch(function (err) { console.log(err); });
 }
 
 msg_board_table.get_msg_by_date = function(date, callback) {
@@ -85,5 +97,12 @@ msg_board_table.num_of_msg_before_date = function(date, callback) {
 }	
 
 msg_board_table.get_msg_by_root_id = function(root_id, callback) {
-	return msg_board_table.find({root_id: root_id}, callback).sort({date: 1});
+	return msg_board_table.find({root_id: root_id}).sort({date: 1});
+}
+
+msg_board_table.get_ten_root_msg_before_time = function(date, callback) {
+	var query = {date: {"$lt": date}};
+	return msg_board_table.find(query)
+						  .where('root_id').equals('NONE')
+						  .sort({date: -1}).limit(10);
 }
