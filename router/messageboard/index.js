@@ -118,20 +118,29 @@ router.post('/post/reply_msgb', function (req, res) {
 		return;
 	}
 
-	var new_msg_board = new msg_board({
-		root_id: req.body.reply_msg_id,
-		reply_id: "NONE",
-		user_id: req.user._id,
-		msg: req.body.msg,
-		date: new Date()
+	msg_board.findById(req.body.reply_msg_id, function (err, msg) {
+		if (err || (! msg)) {
+			req.flash('error', 'server error');
+			res.end();
+			return;
+		}
+
+		var new_msg_board = new msg_board({
+			root_id: req.body.reply_msg_id,
+			reply_id: "NONE",
+			user_id: req.user._id,
+			msg: req.body.msg,
+			date: new Date()
+		});
+
+		msg_board.insert_msg(new_msg_board, function(err) {
+			if (err)
+				throw err;
+			req.flash('info', '帖子发布成功');
+			res.end();
+		});
+
 	});
-	msg_board.insert_msg(new_msg_board, function(err) {
-		if (err)
-			throw err;
-		req.flash('info', '帖子发布成功');
-		res.end();
-	});
-	
 });
 
 module.exports = router;
