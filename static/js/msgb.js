@@ -46,20 +46,16 @@ $(document).ready(function () {
 				data: {msg_id: obj.attr('msg_id')},
 				type: "GET",
 				success: function(res) {
-					//console.log(res);
-					//console.log(obj);
 					obj.before(innerMsg(res));
-					//console.log(innerMsg(res));
 					obj.hide();
 					
 					$('.reply-msgb-btn').click(function () {
-						var obj = $(this);
-						var txt = obj.siblings('textarea');
+						var txt = $(this).siblings('textarea');
 						
 						$.ajax({
 							url: "/messageboard/post/reply_msgb",
 							data: {msg: txt[0].value,
-								   reply_msg_id: obj.attr('msg_id')
+								   reply_msg_id: $(this).parent().next().attr('msg_id')
 							},
 							type: "POST",
 							success: function(res) {

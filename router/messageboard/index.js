@@ -112,7 +112,7 @@ router.post('/post/reply_msgb', function (req, res) {
 		res.end();
 		return ;
 	}
-	if (req.body.message.length < 5) {
+	if (req.body.msg.length < 5) {
 		req.flash('error', "你太短了，长一点吧");
 		res.end();
 		return;
