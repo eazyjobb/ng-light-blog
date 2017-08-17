@@ -44,6 +44,7 @@
 
 <img class="ui avatar rounded image" src="/getavatar/user_id/((=it[x].user_name))"/>
 <span>((=it[x].author))</span>
+<span>(@((=it[x].user_name)))</span>
 
 <p style="margin-top:1em;">((=it[x].msg))</p>
 (( } ))
@@ -52,7 +53,7 @@
 <div class="ui horizontal divider"> 回复 </div>
 <div class="ui form">
 	<textarea style="max-height: 100px;"> </textarea>
-	<div style="width: 100%; text-align: right;" class="more-btn">
+	<div style="width: 100%; text-align: right;" class="reply-msgb-btn">
 		<div class="ui positive basic button" style="margin-top:1em;"> 发送 </div>
 	</div>
 </div>
@@ -67,6 +68,7 @@
 
 		<img class="ui avatar rounded image" src="/getavatar/user_id/((=it[x].user_name))"/>
 		<span>((=it[x].author))</span>
+		<span>(@((=it[x].user_name)))</span>
 		<div class="ui right floated tiny header">
 		(( var oo = new Date(it[x].date); ))
 		((= oo.toLocaleTimeString() + ' ' + oo.toLocaleDateString() ))
