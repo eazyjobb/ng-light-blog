@@ -49,7 +49,7 @@
 <p style="margin-top:1em;">((=it[x].msg))</p>
 (( } ))
 
-((	if ($('.login_status').attr('login') ) {		))
+((	if ($('.login_status').attr('login') === "true") {		))
 <div class="ui horizontal divider"> 回复 </div>
 <div class="ui form">
 	<textarea style="max-height: 100px;"> </textarea>
@@ -57,7 +57,7 @@
 		<div class="ui positive basic button" style="margin-top:1em;"> 发送 </div>
 	</div>
 </div>
-((	}											))
+((	}														))
 
 </script>
 
