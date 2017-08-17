@@ -50,18 +50,24 @@ $(document).ready(function () {
 					obj.hide();
 					
 					$('.reply-msgb-btn').click(function () {
-						var txt = $(this).siblings('textarea');
+						console.log(1);
+						var txt = $(this).parent().siblings('textarea');
 						
-						$.ajax({
-							url: "/messageboard/post/reply_msgb",
-							data: {msg: txt[0].value,
-								   reply_msg_id: $(this).parent().next().attr('msg_id')
-							},
-							type: "POST",
-							success: function(res) {
-								$(location).attr('href', '/messageboard');
-							}
-						});
+						if($(this).hasClass('positive')) {
+							$(this).removeClass('positive');
+							$(this).addClass('negative');
+							$(this).html('等待');
+							$.ajax({
+								url: "/messageboard/post/reply_msgb",
+								data: {msg: txt[0].value,
+									   reply_msg_id: $(this).parent().parent().next().attr('msg_id')
+								},
+								type: "POST",
+								success: function(res) {
+									$(location).attr('href', '/messageboard');
+								}
+							});
+						}
 					});
 				}
 			});
