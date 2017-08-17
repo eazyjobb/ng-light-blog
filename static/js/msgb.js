@@ -40,18 +40,17 @@ $(document).ready(function () {
 		$('.page-load-status').before(outterMsg(data));
 		$('.more-btn').click(function () {
 			var obj = $(this);
-			var now_msg_id = obj.attr('msg_id');
 			
 			$.ajax({
 				url: "/messageboard/get_comment",
-				data: {msg_id: now_msg_id},
+				data: {msg_id: obj.attr('msg_id')},
 				type: "GET",
 				success: function(res) {
 					//console.log(res);
 					//console.log(obj);
 					obj.before(innerMsg(res));
 					//console.log(innerMsg(res));
-					obj.remove();
+					obj.hide();
 					
 					$('.reply-msgb-btn').click(function () {
 						var obj = $(this);
@@ -60,7 +59,7 @@ $(document).ready(function () {
 						$.ajax({
 							url: "/messageboard/post/reply_msgb",
 							data: {msg: txt[0].value,
-								   reply_msg_id: now_msg_id
+								   reply_msg_id: obj.attr('msg_id')
 							},
 							type: "POST",
 							success: function(res) {

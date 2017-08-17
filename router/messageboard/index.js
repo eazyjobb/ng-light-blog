@@ -112,6 +112,12 @@ router.post('/post/reply_msgb', function (req, res) {
 		res.end();
 		return ;
 	}
+	if (req.body.message.length < 5) {
+		req.flash('error', "你太短了，长一点吧");
+		res.end();
+		return;
+	}
+
 	var new_msg_board = new msg_board({
 		root_id: req.body.reply_msg_id,
 		reply_id: "NONE",
