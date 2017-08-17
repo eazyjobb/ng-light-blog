@@ -40,7 +40,9 @@ $(document).ready(function () {
 		$('.page-load-status').before(outterMsg(data));
 		$('.more-btn').click(function () {
 			var obj = $(this);
-			
+			if ( ! obj.hasClass('once') ) {
+				obj.addClass('once');
+
 			$.ajax({
 				url: "/messageboard/get_comment",
 				data: {msg_id: obj.attr('msg_id')},
@@ -71,6 +73,9 @@ $(document).ready(function () {
 					});
 				}
 			});
+		
+			}
+
 		});
 	});
 
