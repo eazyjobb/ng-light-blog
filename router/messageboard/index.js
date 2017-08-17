@@ -83,6 +83,12 @@ router.post('/post', function (req, res) {
 		res.end();
 		return ;
 	}
+	if (req.body.message.length < 5) {
+		req.flash('error', "你太短了，长一点吧");
+		res.end();
+		return;
+	}
+
 	var new_msg_board = new msg_board({
 		root_id: "NONE",
 		reply_id: "NONE",

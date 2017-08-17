@@ -64,7 +64,7 @@ $(document).ready(function () {
 							},
 							type: "POST",
 							success: function(res) {
-								$(location).attr('href', './');
+								$(location).attr('href', '/messageboard');
 							}
 						});
 					});
