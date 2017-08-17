@@ -34,7 +34,7 @@ var msg_board_table = module.exports = mongoose.model('msg_board', msg_board_sch
 
 msg_board_table.insert_msg = function(new_msg, callback) {
 	// 默认前端进行了约束保证？
-	console.log(new_msg);
+	//console.log(new_msg);
 	promise.delay(0).then(function () {
 		new_msg.save(callback);
 	}).then(function () {
