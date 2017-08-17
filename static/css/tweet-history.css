@@ -20,6 +20,10 @@ body {
 	color: #777;
 }
 
+#load_more_tweet_button {
+	margin-bottom: 1em;
+}
+
 @media only screen and (max-width: 767px) {
 	#history-header {
 		width: 3em;

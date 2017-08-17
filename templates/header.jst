@@ -1,3 +1,4 @@
+{{if( it.description || it.title)	{ }}
 <div class="ui fluid container">
 <div id="header-title">
 <div class="ui main text container inverted segment" style="border:none; box-shadow:none;">
@@ -6,18 +7,19 @@
 </div>
 </div>
 </div>
+{{									} }}
 
 <div class="ui borderless main menu inverted segment" id="header-manu">
 	<div class="ui text container">
-		<div href="#" class="header item">
-			<img class="logo" src="/static/img/logo.png" />
+		<div href="/" class="header item manu-jump">
+			<img class="ui mini image" src="/static/img/logo.png" />
 			R S N D M
 		</div>
 		
-		<a href="#" class="ui right floated item header-large">Blog</a>
+		<a href="/undone" class="ui right floated item header-large">Blog</a>
 		<a href="/today" class="ui right floated item header-large ">今日事</a>
-		<a href="#" class="ui right floated item header-large">作品集</a>
-		<a href="/messageboard" class="ui right floated item header-large">留言版</a>
+		<a href="/undone" class="ui right floated item header-large">作品集</a>
+		<a href="/undone" class="ui right floated item header-large">留言版</a>
 
 		{{ if (it.login) {                                               }}
 		<a href="/user" class="ui right floated item header-large">用户
@@ -35,10 +37,10 @@
 		<a class="ui right floated dropdown item header-tiny">
 			<i class="sidebar icon"></i>
 			<div class="menu">
-				<div href="#" class="item">Blog</div>
+				<div href="/undone" class="item">Blog</div>
 				<div href="/today" class="item manu-jump">今日事</div>
-				<div href="#" class="item">作品集</div>
-				<div href="/messageboard" class="item manu-jump">留言版</div>
+				<div href="/undone" class="item">作品集</div>
+				<div href="/undone" class="item manu-jump">留言版</div>
 				{{ if (it.login) {                                               }}
 					<div href="/user" class="item manu-jump">用户</div>
 					<div href="/user/logout" class="item manu-jump">登出</div>

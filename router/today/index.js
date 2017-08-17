@@ -40,7 +40,7 @@ router.get('/', function (req, res) {
 			title: '今日事',
 			header: render.header({
 				title: '今日事',
-				description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>',
+				description: '<p>又急又气，正在施工中</p><p>logo呢已经更新了，你说好不好啊</p>',
 				login: req.user || false,
 				notice_info: false
 			}),
@@ -84,7 +84,7 @@ router.get('/history', function (req, res) {
 		title: '当年今日',
 		header: render.header({
 			title: '当年今日',
-			description: '<p>又急又气，正在施工中</p><p>没有logo，你奈我何</p>',
+			description: '<p>又急又气，正在施工中</p><p>logo呢已经更新了，你说好不好啊</p>',
 			login: req.user || false
 		}),
 		content: render.tweet_history(),
@@ -93,6 +93,7 @@ router.get('/history', function (req, res) {
 });
 
 router.post('/update', authorized(), function (req, res) {
+	console.log(req.user);
 	var id = req.user._id.toString();
 
 	if (req.body.omsg.length > 140) {

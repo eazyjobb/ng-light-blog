@@ -12,8 +12,10 @@ var express = require('express'),
 router.get('/', function(req, res) {
 	res.send(render.base({
 		title: 'Homepage',
-		error: render.error(req.flash('error')),
-		info: render.info(req.flash('info'))
+		header: render.header({
+			login: req.user || false
+		}),
+		content: render.home()
 	}));
 });
 
@@ -25,6 +27,23 @@ router.use('/today', today);
 router.use('/getavatar', avatar);
 router.use('/messageboard', messageboard);
 
+router.use('/favicon.ico', function (req, res) {
+	res.redirect('/static/img/favicon.ico');
+});
+
+router.use('/undone', function (req, res) {
+	res.send(render.base({
+		title: '尚未完工',
+		header: render.header({
+			title: '尚未完工',
+			description: '<p>你要访问的页面还在建设，或者等待投稿 :)</p><p>别急别急</p>',
+			login: req.user || false
+		}),
+		content: render.not_found({code: "建设中"}),
+		bottom: render.bottom()
+	}));
+});
+
 router.use('*', function (req, res) {
 	res.send(render.base({
 		title: '404 Not Found',
@@ -33,7 +52,7 @@ router.use('*', function (req, res) {
 			description: '<p>或者你在试图做些越权的事 :)</p>',
 			login: req.user || false
 		}),
-		content: render.not_found(),
+		content: render.not_found({code:'404'}),
 		bottom: render.bottom()
 	}));
 });
