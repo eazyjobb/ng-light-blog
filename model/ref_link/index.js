@@ -30,7 +30,6 @@ ref_link_table.get_unread_ref_link_by_to_id = function(to_id) {
 }
 
 ref_link_table.set_ref_link_read = function(id) {
-	console.log(id);
 	return ref_link_table.update({_id: id}, {read: true});
 }
 
