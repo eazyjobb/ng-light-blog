@@ -36,9 +36,6 @@ router.get('/data', function (req, res) {
 });
 
 router.get('/get_comment', function (req, res) {
-	//res.json({end:1});
-	//console.log(req.query.msg_id);
-	
 	var msg = [];
 	var root_id = req.query.msg_id;
 	
@@ -58,7 +55,6 @@ router.get('/get_comment', function (req, res) {
 						});
 				
 	}).then(function () {
-		//console.log(msg);
 		res.json(msg);
 	}).catch(function (err) { console.log(err); });
 });
@@ -152,7 +148,7 @@ router.get('/un_read', function (req, res) {
 	
 	ref_link
 		.get_unread_ref_link_by_to_id(req.user._id)
-		.select({date:1, msg_id:1, root_id:1})
+		.select({_id: 1, date:1, msg_id:1, root_id:1})
 		.populate({path: "msg_data", populate: {path:"user"}})
 		.exec(function (err, data) {
 			if (err || !data) {
@@ -162,14 +158,19 @@ router.get('/un_read', function (req, res) {
 			}
 
 			var unread = [];
-			for (var x in data)
+			for (var x in data) {
+				var mid = data[x].root_id;
+				if (mid == "NONE")
+					mid = data[x].msg_data._id;
 				unread.push({
+					ref_link_id: data[x]._id,
 					msg: data[x].msg_data.msg,
 					date: data[x].date.getTime(),
-					mid: data[x].root_id,
+					mid: mid,
 					name: data[x].msg_data.user.name,
 					user_id: data[x].msg_data.user.user_name
 				});
+			}
 
 			res.json({unread});
 			res.end();
@@ -203,6 +204,16 @@ router.get('/view_msg/*', function (req, res) {
 		}));
 
 	})
+});
+
+router.post('/post/set_ref_link_read', function (req, res) {
+	ref_link.set_ref_link_read(req.body.ref_link_id)
+									   .exec(function (err) {
+										   if (err)
+											   console.log(err);
+										   res.end();
+									   });
+									 
 });
 
 module.exports = router;

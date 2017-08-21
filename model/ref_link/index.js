@@ -19,14 +19,6 @@ ref_link_schema.virtual('msg_data', {
 
 var ref_link_table = module.exports = mongoose.model('ref_link', ref_link_schema);
 
-/*
-	function:
-		insert_ref_link(new_ref_link, callback)
-		get_unread_ref_link_by_to_id(to_id, callback) //¸ù¾Ýto_id»ñÈ¡µ±Ç°ÓÃ»§µÄÎ´¶Áref_link£¬°´ÈÕÆÚÅÅÐò£¬ÕâÁ½¸öº¯ÊýÊÇ·ñÐèÒªÐ£Ñéµ±Ç°µÇÂ¼ÓÃ»§È·¶¨ºÏ·¨ÐÔ£¿
-		get_all_ref_link_by_to_id(to_id, callback)    // ¸ù¾Ýto_id»ñÈ¡µ±Ç°ÓÃ»§µÄËùÓÐat£¬°´ÈÕÆÚÅÅÐò
-});
-*/
-
 ref_link_table.insert_ref_link = function(new_ref_link, callback) {
 	new_ref_link.save(callback);
 }
@@ -36,4 +28,16 @@ ref_link_table.get_unread_ref_link_by_to_id = function(to_id) {
 	                      where('read').equals(false).
 						  sort({date: -1});
 }
+
+ref_link_table.set_ref_link_read = function(id) {
+	console.log(id);
+	return ref_link_table.update({_id: id}, {read: true});
+}
+
+/*
+ref_link_table.set_ref_link_read("599656db05dd8a65280f2637").exec(function (err) {
+	if (err)
+		console.log(err);
+});
+*/
 
