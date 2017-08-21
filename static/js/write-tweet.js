@@ -47,24 +47,27 @@ $(document).ready(function () {
 			console.log(res);
 			$("#unread").after(unreadMsg(res));
 			$('.look-msg').click(function () {
-				console.log($(this));
+				
+				var ref_link_id = $(this).attr('ref_link_id');
+					msg_id = $(this).attr('href');
+				
 				if($(this).hasClass('positive')) {
 					$(this).removeClass('positive');
 					$(this).addClass('negative');
 					$(this).html('等待');
-/*
+
 					$.ajax({
-						url: "/messageboard/post/reply_msgb",
-						data: {msg: txt[0].value,
-							   reply_msg_id: $(this).parent().parent().next().attr('msg_id')
+						url: "/messageboard/post/set_ref_link_read",
+						data: {
+							ref_link_id: ref_link_id
 						},
 						type: "POST",
-						success: function(res) {*/
+						success: function(res) {
 							$(location).attr('href',
-								'/messageboard/view_msg/' + $(this).attr('href')
+								'/messageboard/view_msg/' + msg_id
 							);
-/*						}
-					});*/
+						}
+					});
 				}
 			});
 		}
