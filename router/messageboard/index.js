@@ -179,18 +179,30 @@ router.get('/un_read', function (req, res) {
 
 router.get('/view_msg/*', function (req, res) {
 	var root_id = req.params[0];
-	res.send(render.base({
-		title:'留言版',
-		header: render.header({
-			title: '留言版',
-			description: '<p>又急又气，正在施工中</p><p>logo呢已经更新了，你说好不好啊</p>',
-			login: req.user || false
-		}),
-		info: render.info(req.flash('info')),
-		error: render.error(req.flash('error')),
-		content: render.view_msg({id: root_id}),
-		bottom: render.bottom()
-	}));
+
+	msg_board.get_msg_by_id(root_id)
+		.populate({path:'user'})
+		.exec(function (err, data) {
+		if (err || !data) {
+			console.log(err);
+			res.end();
+			return;
+		}
+
+		res.send(render.base({
+			title:'留言版',
+			header: render.header({
+				title: '留言版',
+				description: '<p>又急又气，正在施工中</p><p>logo呢已经更新了，你说好不好啊</p>',
+				login: req.user || false
+			}),
+			info: render.info(req.flash('info')),
+			error: render.error(req.flash('error')),
+			content: render.view_msg({id: root_id, login: req.user, data: data}),
+			bottom: render.bottom()
+		}));
+
+	})
 });
 
 module.exports = router;

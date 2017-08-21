@@ -1,1 +1,55 @@
 <div style="display:none;" class="root_id" msgroot="{{= it.id}}" ></div>
+<div style="display:none;" class="login_status" login="{{= it.login != false}}" ></div>
+
+<script id="template-msgb-detail" type="text/x-dot-template">
+
+(( for (x in it) {	))
+<div class="ui horizontal divider">
+	(( var oo = new Date(it[x].date); ))
+	((= oo.toLocaleTimeString() + ' ' + oo.toLocaleDateString() ))
+</div>
+
+<img class="ui avatar rounded image" src="/getavatar/user_id/((=it[x].user_name))"/>
+<span>((=it[x].author))</span>
+<span class="at-people">(@((=it[x].user_name)))</span>
+
+<p style="margin-top:1em;">((=it[x].msg))</p>
+(( } ))
+
+((	if ($('.login_status').attr('login') === "true") {		))
+<div class="ui horizontal divider"> 回复 </div>
+<div class="ui form">
+	<textarea style="max-height: 100px;"> </textarea>
+	<div style="width: 100%; text-align: right;">
+		<div class="ui positive basic button reply-msgb-btn" style="margin-top:1em;"> 发送 </div>
+	</div>
+</div>
+((	}														))
+
+</script>
+
+<div class="ui text container" style="margin-top: 2em; margin-bottom: 2em;">
+<div class="ui segment">
+	<div style="position:relative;" msg_id="{{=it.data._id}}" class="msg-box">
+
+		<img class="ui avatar rounded image" src="/getavatar/user_id/{{=it.data.user.user_name}}"/>
+		<span>{{=it.data.user.name}}</span>
+		<span class="at-people">(@{{=it.data.user.user_name}})</span>
+		<div class="ui right floated tiny header">
+		{{= it.data.date.toLocaleTimeString() + ' ' + it.data.date.toLocaleDateString() }}
+		</div>
+
+		
+		<p style="margin-top:1em;">{{=it.data.msg}}</p>
+		<div style="width: 100%; text-align: right;" class="more-btn" msg_id="{{=it.data._id}}">
+			<div class="ui positive basic button">更多</div>
+		</div>
+
+	</div>
+</div>
+</div>
+
+</script>
+
+<script language="javascript" type="text/javascript" src="/static/js/doT.min.js"></script>
+<script language="javascript" type="text/javascript" src="/static/js/view_msg.js"></script>
