@@ -7,7 +7,8 @@ var express = require('express'),
 
 	}}),
 	authorized = require('../authorized'),
-	fs = require('fs');
+	fs = require('fs'),
+	sharp = require('sharp');
 
 router.use(authorized());
 
@@ -28,25 +29,17 @@ router.post('/avatar/', function(req, res) {
 		var swd = './static/user/' + req.user._id;
 		var mime = '.' + req.file.originalname.split('.').pop();
 
-		if (mime != '.jpg'){
-			req.flash('error', 'sorry, jpg only');
-			res.redirect('/user');
-		} else
 		fs.mkdir(swd, function (err) {
 			if (err && err.code != 'EEXIST') {
 				console.log(err.code);
 				throw err;
 			}
 
-			//if (mime == '.jpg')
-				fs.rename('./tmp/' + req.file.filename, swd + '/avatar.jpg',
-					function (err) {
-						if (err)
-							throw err;
-				});
-			//else
-			//	images('./tmp/' + req.file.filename)
-			//		.encode(swd + '/avatar.jpg', { operation: 100 });
+			sharp('./tmp/' + req.file.filename)
+				.resize(256, 256)
+				.jpeg({quality:100})
+				.toFile(swd + '/avatar.jpg');
+
 			req.flash('info', 'Upload Avatar successful');
 			res.redirect('/user');
 		});
