@@ -23,6 +23,12 @@ $(document).ready(function () {
 	var outterMsg = doT.template($("#template-msgb").text());
 	var innerMsg = doT.template($("#template-msgb-detail").text());
 	
+	var at_function = function () {
+		var s = $(this).siblings('.ui.form').find('textarea').val();
+		var name = $(this).html();
+		$(this).siblings('.ui.form').find('textarea').val(s + name + ' ');
+	};
+
 	infScroll.on( 'load', function(data) {
 		data = JSON.parse(data);
 		
@@ -37,6 +43,9 @@ $(document).ready(function () {
 			now_date = new Date(data[data.length - 1].date);
 		}
 
+		$('.at-people').off("click");
+		$('.at-people').click(at_function);
+
 		$('.page-load-status').before(outterMsg(data));
 		$('.more-btn').click(function () {
 			var obj = $(this);
@@ -50,6 +59,9 @@ $(document).ready(function () {
 				success: function(res) {
 					obj.before(innerMsg(res));
 					obj.hide();
+
+					$('.at-people').off("click");
+					$('.at-people').click(at_function);
 					
 					$('.reply-msgb-btn').click(function () {
 						console.log(1);

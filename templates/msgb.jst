@@ -44,7 +44,7 @@
 
 <img class="ui avatar rounded image" src="/getavatar/user_id/((=it[x].user_name))"/>
 <span>((=it[x].author))</span>
-<span class="at-people">(@((=it[x].user_name)))</span>
+(<a class="at-people">@((=it[x].user_name))</a>)
 
 <p style="margin-top:1em;">((=it[x].msg))</p>
 (( } ))
@@ -68,7 +68,7 @@
 
 		<img class="ui avatar rounded image" src="/getavatar/user_id/((=it[x].user_name))"/>
 		<span>((=it[x].author))</span>
-		<span class="at-people">(@((=it[x].user_name)))</span>
+		(<a class="at-people">@((=it[x].user_name))</a>)
 		<div class="ui right floated tiny header">
 		(( var oo = new Date(it[x].date); ))
 		((= oo.toLocaleTimeString() + ' ' + oo.toLocaleDateString() ))

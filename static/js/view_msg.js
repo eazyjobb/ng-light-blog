@@ -11,6 +11,12 @@ $(document).ready(function () {
 
 	var innerMsg = doT.template($("#template-msgb-detail").text());
 
+	var at_function = function () {
+		var s = $(this).siblings('.ui.form').find('textarea').val();
+		var name = $(this).html();
+		$(this).siblings('.ui.form').find('textarea').val(s + name + ' ');
+	};
+
 	$('.more-btn').click(function () {
 		var obj = $(this);
 		if ( ! obj.hasClass('once') ) {
@@ -23,6 +29,9 @@ $(document).ready(function () {
 			success: function(res) {
 				obj.before(innerMsg(res));
 				obj.hide();
+
+				$('.at-people').off("click");
+				$('.at-people').click(at_function);
 					
 				$('.reply-msgb-btn').click(function () {
 					console.log(1);
