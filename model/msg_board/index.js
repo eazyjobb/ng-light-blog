@@ -75,6 +75,8 @@ msg_board_table.insert_msg = function(new_msg, callback) {
 				msg_board_table.get_msg_by_id(root_msg_id)
 							   .exec(function (err, res) {
 									var user_id = res.user_id;
+									if (user_id == new_msg.user_id)
+										return;
 									user.get_user_by_id(user_id, function (err, res) {
 										if (res.user_name in atList) return ;
 										

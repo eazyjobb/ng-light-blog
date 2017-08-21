@@ -21,10 +21,7 @@
 		<a href="/messageboard" class="ui right floated item header-large">留言版</a>
 
 		{{ if (it.login) {                                               }}
-		<a href="/user" class="ui right floated item header-large">用户
-		{{ if (it.notice_info) {		}}
-		<i class="ui inverted mail square icon"></i>
-		{{ }						}}
+		<a href="/user" class="ui right floated item header-large notice">用户
 		</a>
 			
 		<a href="/user/logout" class="ui right floated item header-large">登出</a>
@@ -40,7 +37,7 @@
 				<div href="/today" class="item manu-jump">今日事</div>
 				<div href="/messageboard" class="item manu-jump">留言版</div>
 				{{ if (it.login) {                                               }}
-					<div href="/user" class="item manu-jump">用户</div>
+					<div href="/user" class="item manu-jump notice">用户</div>
 					<div href="/user/logout" class="item manu-jump">登出</div>
 				{{ } else {                                                      }}
 					<div href="/user/login" class="item manu-jump">登陆</div>

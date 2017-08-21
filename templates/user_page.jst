@@ -1,7 +1,7 @@
 <div class="ui text container">
 
 <div class="ui row">
-	<div class="ui text container segment">
+	<div class="ui text container segment spacing">
 		<div class="ui images">
 			<img src="/getavatar/req_id" class="ui small bordered rounded image"/>
 			<img src="/getavatar/req_id" class="ui tiny bordered rounded image"/>
@@ -16,7 +16,7 @@
 </div>
 
 <div class="ui row">
-	<div class="ui text container segment">
+	<div class="ui text container segment spacing">
 		<label>今日最气</label>
 		<input type="text" name="sadness" placeholder="今日最气">
 		<button class="ui button sadness">更新最气</button>
@@ -24,13 +24,55 @@
 </div>
 
 <div class="ui row">
-	<div class="ui text container segment">
+	<div class="ui text container segment spacing">
 		<label>今日最囍</label>
 		<input type="text" name="happiness" placeholder="今日最囍">
 		<button class="ui button happiness">更新最囍</button>
 	</div>
 </div>
 
+<div class="ui row">
+	<div class="ui text container segment spacing">
+		<div class="ui large header" id="unread">未读信息</div>
+	</div>
 </div>
 
+</div>
+
+<script type="text/x-dot-template" id="unread-msgb">
+(( for (var x in it.unread) {                     ))
+((     var oo = new Date(it.unread[x].date);      ))
+
+<div class="ui horizontal divider">
+		((= oo.toLocaleTimeString() + ' ' + oo.toLocaleDateString() ))
+</div>
+
+<h3 class="ui header">
+	<img src="/getavatar/user_id/((= it.unread[x].user_id ))" class="ui circular image">
+	((= it.unread[x].name ))
+</h3>
+<div style="word-wrap:break-word; overflow:hidden;">
+	(( if (it.unread[x].msg.length < 51) { ))
+		((= it.unread[x].msg ))
+	(( } ))
+	(( else { ))
+		((= it.unread[x].msg.substring(0, 47) + '...' ))
+	(( } ))
+</div>
+<div style="width:100%; text-align:right;">
+<div class="ui basic positive button look-msg" href="((= it.unread[x].mid))"> 查看 </div>
+</div>
+(( }                                              ))
+</script>
+
+<script language="javascript" type="text/javascript" src="/static/js/doT.min.js"></script>
 <script language="javascript" type="text/javascript" src="/static/js/write-tweet.js"></script>
+
+<style type="text/css">
+
+.spacing {
+	margin-top: 1em !important;
+	margin-bottom: 1em !important;
+}
+
+</style>

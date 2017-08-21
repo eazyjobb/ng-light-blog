@@ -3,11 +3,18 @@ var mongoose = require('mongoose');
 var promise = require('bluebird');
 
 var ref_link_schema = mongoose.Schema({
-	root_id: {type: String},	// *根据回复帖子的根获取帖子链条
-	to_id: {type: String},		// at的接受者
-	msg_id: {type: String},		// 发出at的消息的id
-	date: {type: Date},			// at发送的日期（是否需要加入过期机制？
-	read: {type: Boolean}		// at是否已读
+	root_id: {type: String},	// *赂霉戮脻禄脴赂麓脤没脳脫碌脛赂霉禄帽脠隆脤没脳脫脕麓脤玫
+	to_id: {type: String},		// at碌脛陆脫脢脺脮脽
+	msg_id: {type: String},		// 路垄鲁枚at碌脛脧没脧垄碌脛id
+	date: {type: Date},			// at路垄脣脥碌脛脠脮脝脷拢篓脢脟路帽脨猫脪陋录脫脠毛鹿媒脝脷禄煤脰脝拢驴
+	read: {type: Boolean}		// at脢脟路帽脪脩露脕
+});
+
+ref_link_schema.virtual('msg_data', {
+	ref: 'msg_board', 
+	localField: 'msg_id',
+	foreignField: '_id',
+	justOne: true
 });
 
 var ref_link_table = module.exports = mongoose.model('ref_link', ref_link_schema);
@@ -15,8 +22,8 @@ var ref_link_table = module.exports = mongoose.model('ref_link', ref_link_schema
 /*
 	function:
 		insert_ref_link(new_ref_link, callback)
-		get_unread_ref_link_by_to_id(to_id, callback) //根据to_id获取当前用户的未读ref_link，按日期排序，这两个函数是否需要校验当前登录用户确定合法性？
-		get_all_ref_link_by_to_id(to_id, callback)    // 根据to_id获取当前用户的所有at，按日期排序
+		get_unread_ref_link_by_to_id(to_id, callback) //赂霉戮脻to_id禄帽脠隆碌卤脟掳脫脙禄搂碌脛脦麓露脕ref_link拢卢掳麓脠脮脝脷脜脜脨貌拢卢脮芒脕陆赂枚潞炉脢媒脢脟路帽脨猫脪陋脨拢脩茅碌卤脟掳碌脟脗录脫脙禄搂脠路露篓潞脧路篓脨脭拢驴
+		get_all_ref_link_by_to_id(to_id, callback)    // 赂霉戮脻to_id禄帽脠隆碌卤脟掳脫脙禄搂碌脛脣霉脫脨at拢卢掳麓脠脮脝脷脜脜脨貌
 });
 */
 
@@ -24,7 +31,7 @@ ref_link_table.insert_ref_link = function(new_ref_link, callback) {
 	new_ref_link.save(callback);
 }
 
-ref_link_table.get_unread_ref_link_by_to_id = function(to_id, callback) {
+ref_link_table.get_unread_ref_link_by_to_id = function(to_id) {
 	return ref_link_table.find({to_id: to_id}).
 	                      where('read').equals(false).
 						  sort({date: -1});

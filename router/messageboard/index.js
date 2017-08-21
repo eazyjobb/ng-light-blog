@@ -4,7 +4,8 @@ var promise = require('bluebird'),
 	render = require('../../render'),
 	user = require('../../model/user'),
 	msg_board = require('../../model/msg_board'),
-	authorized = require('../authorized');
+	authorized = require('../authorized'),
+	ref_link = require('../../model/ref_link');
 
 router.get('/data', function (req, res) {
 	//res.json({end:1});
@@ -141,6 +142,55 @@ router.post('/post/reply_msgb', function (req, res) {
 		});
 
 	});
+});
+
+router.get('/un_read', function (req, res) {
+	if (!req.user) {
+		res.end();
+		return;
+	}
+	
+	ref_link
+		.get_unread_ref_link_by_to_id(req.user._id)
+		.select({date:1, msg_id:1, root_id:1})
+		.populate({path: "msg_data", populate: {path:"user"}})
+		.exec(function (err, data) {
+			if (err || !data) {
+				console.log(err);
+				res.end();
+				return;
+			}
+
+			var unread = [];
+			for (var x in data)
+				unread.push({
+					msg: data[x].msg_data.msg,
+					date: data[x].date.getTime(),
+					mid: data[x].root_id,
+					name: data[x].msg_data.user.name,
+					user_id: data[x].msg_data.user.user_name
+				});
+
+			res.json({unread});
+			res.end();
+		});
+
+});
+
+router.get('/view_msg/*', function (req, res) {
+	var root_id = req.params[0];
+	res.send(render.base({
+		title:'留言版',
+		header: render.header({
+			title: '留言版',
+			description: '<p>又急又气，正在施工中</p><p>logo呢已经更新了，你说好不好啊</p>',
+			login: req.user || false
+		}),
+		info: render.info(req.flash('info')),
+		error: render.error(req.flash('error')),
+		content: render.view_msg({id: root_id}),
+		bottom: render.bottom()
+	}));
 });
 
 module.exports = router;
