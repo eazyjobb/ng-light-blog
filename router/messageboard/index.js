@@ -210,8 +210,6 @@ router.get('/view_msg/*', function (req, res) {
 			content: render.view_msg({id: root_id, login: req.user, data: data}),
 			bottom: render.bottom()
 		}));
-
-	})
 	});
 });
 
