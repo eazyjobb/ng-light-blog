@@ -86,11 +86,15 @@ router.post('/post', function (req, res) {
 		return;
 	}
 
+	var p_msg = req.body.message
+		.replace(/\r/g, '')
+		.replace(/\n/g, ' </br>');
+
 	var new_msg_board = new msg_board({
 		root_id: "NONE",
 		reply_id: "NONE",
 		user_id: req.user._id,
-		msg: req.body.message,
+		msg: p_msg,
 		date: new Date()
 	});
 	//new_msg_board.root_id = new_msg_board._id;
@@ -122,11 +126,15 @@ router.post('/post/reply_msgb', function (req, res) {
 			return;
 		}
 
+		var p_msg = req.body.msg
+			.replace(/\r/g, '')
+			.replace(/\n/g, ' </br>');
+
 		var new_msg_board = new msg_board({
 			root_id: req.body.reply_msg_id,
 			reply_id: "NONE",
 			user_id: req.user._id,
-			msg: req.body.msg,
+			msg: p_msg,
 			date: new Date()
 		});
 
@@ -204,16 +212,17 @@ router.get('/view_msg/*', function (req, res) {
 		}));
 
 	})
+	});
 });
 
 router.post('/post/set_ref_link_read', function (req, res) {
-	ref_link.set_ref_link_read(req.body.ref_link_id)
-									   .exec(function (err) {
-										   if (err)
-											   console.log(err);
-										   res.end();
-									   });
-									 
+	ref_link
+		.set_ref_link_read(req.body.ref_link_id)
+		.exec(function (err) {
+			if (err)
+				console.log(err);
+				res.end();
+		});
 });
 
 module.exports = router;
